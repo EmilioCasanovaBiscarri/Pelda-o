@@ -186,6 +186,9 @@ function deshacer(){
 }
 // Pista: el siguiente peldaño del camino más corto hasta la llegada, por palabras corrientes (o, si no hay, por
 // cualquiera válida), sin repetir las de la escalera. Se deja como borrador y suma 1.
+// pide confirmación en el propio botón (5 segundos), como Rendirse
+let pistaPlazo;
+function restaurarPista(){ clearTimeout(pistaPlazo); const b = $('pista'); b.classList.remove('aviso-negro'); b.innerHTML = 'Pista <span class="coste">+1</span>'; }
 function pista(){
   const p = partida(); if(p.fin) return;
   const usadas = new Set(escalera()), b = reto().b, desde = actual();
@@ -193,6 +196,15 @@ function pista(){
   if(!ruta) return toast('Desde aquí no hay camino: prueba a deshacer', 'bad', 3500);
   const sig = ruta[1];
   if(escrito.join('') === sig) return toast('La pista ya está en el borrador: pulsa ✓');
+  const bp = $('pista');
+  if(!bp.classList.contains('aviso-negro')){
+    restaurarRendirse();
+    bp.classList.add('aviso-negro'); bp.textContent = 'Confirmar';
+    toast('La pista te costará un par, ¿seguro?', 'serio', 5000);
+    clearTimeout(pistaPlazo); pistaPlazo = setTimeout(()=>{ restaurarPista(); toast(''); }, 5000);
+    return;
+  }
+  restaurarPista();
   p.pistas++; tocar(p); save();
   escrito = [...sig]; pos = 0;
   renderTodo(); toast('Pista (+1): pulsa ✓ para fijarla', 'good');
@@ -204,6 +216,7 @@ function rendirse(){
   const p = partida(); if(p.fin) return;
   const b = $('rendirse');
   if(!b.classList.contains('aviso')){
+    restaurarPista();
     b.classList.add('aviso'); b.textContent = 'Confirmar';
     toast('¿Seguro? Toca «Confirmar» para ver la solución', 'bad', 5000);
     clearTimeout(rendirPlazo); rendirPlazo = setTimeout(()=>{ restaurarRendirse(); toast(''); }, 5000);
@@ -232,13 +245,13 @@ function siguienteNivel(){
 }
 function irNivel(n){
   if(!n || n === S.nivel) return;
-  S.nivel = n; vaciar(); restaurarRendirse(); toast('');
+  S.nivel = n; vaciar(); restaurarRendirse(); restaurarPista(); toast('');
   if($('resultado').open) $('resultado').close();
   renderTodo(); window.scrollTo(0, 0);
 }
 // al abrir un día se empieza por el primer nivel sin terminar
 const primerNivel = d => NIVELES.find(n=>{ const p = ver(d, n); return !p || !p.res; }) || NIVELES[0];
-function irA(d){ d = Math.min(today(), Math.max(1, d)); S.dia = d; S.nivel = primerNivel(d); vaciar(); restaurarRendirse(); toast(''); renderTodo(); window.scrollTo(0, 0); }
+function irA(d){ d = Math.min(today(), Math.max(1, d)); S.dia = d; S.nivel = primerNivel(d); vaciar(); restaurarRendirse(); restaurarPista(); toast(''); renderTodo(); window.scrollTo(0, 0); }
 
 // ---------- pintar ----------
 function renderNiveles(){

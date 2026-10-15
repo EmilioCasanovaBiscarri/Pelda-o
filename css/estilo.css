@@ -105,7 +105,7 @@ h1 .met{color:var(--accent-text)}
 .mando{position:sticky;bottom:0;margin-top:auto;z-index:2;display:flex;flex-direction:column;gap:8px;margin-inline:-16px;padding:6px 16px max(10px,env(safe-area-inset-bottom));
   background:linear-gradient(to bottom,transparent,var(--bg) 14px)}
 .toast{min-height:1.4em;text-align:center;font-size:.98rem;font-weight:700;color:var(--muted)}
-.toast.bad{color:var(--bad)} .toast.good{color:var(--accent-text)}
+.toast.bad{color:var(--bad)} .toast.serio{color:var(--fg)} .toast.good{color:var(--accent-text)}
 .toast.grande{font-family:var(--display);font-size:1.25rem;font-weight:800;color:var(--accent-text);animation:salto .45s ease-out}
 @keyframes salto{0%{transform:scale(.8);opacity:0}60%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}
 .jugar{display:flex;flex-direction:column;gap:10px}
@@ -117,6 +117,7 @@ h1 .met{color:var(--accent-text)}
 .btn:disabled{opacity:.4;cursor:default}
 .btn .coste{font-size:.78em;color:var(--muted);font-weight:700}
 .btn.aviso{background:var(--bad);border-color:var(--bad);color:#FFFFFF}
+.btn.aviso-negro{background:var(--fg);border-color:var(--fg);color:var(--bg)}
 .btn[hidden]{display:none}
 .teclado{display:flex;flex-direction:column;gap:6px;user-select:none;-webkit-user-select:none}
 .tfila{display:flex;gap:4px;justify-content:center}
