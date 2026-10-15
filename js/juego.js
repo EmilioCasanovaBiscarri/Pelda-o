@@ -25,8 +25,9 @@ let RETOS = null, PALABRAS = new Set(), CORRIENTES = new Set();
 //   rep: true si se está repitiendo; t: hora del último cambio (para unir lo de varias pestañas).
 // racha[día] = 1 si ese día se completaron los tres niveles en su fecha.
 let S = {dia:1, nivel:'principiante', partidas:{}, racha:{}};
-// lo que se está escribiendo (no se guarda): la letra elegida de la fila activa y la letra nueva del borrador
-let sel = 0, nueva = null;
+// lo que se está escribiendo en el borrador (no se guarda): una letra por casilla ('' si está vacía) y la casilla elegida
+let escrito = [], pos = 0;
+const vaciar = () => { escrito = []; pos = 0; };
 
 // ---------- guardar sin pisar a otras pestañas ----------
 function load(){ try{ const s = JSON.parse(localStorage.getItem(STORE)||'null'); if(!s) return;
@@ -58,7 +59,7 @@ window.addEventListener('storage', e=>{
   if(e.newValue === null){ S.partidas = {}; S.racha = {}; }
   else { let otro = null; try{ otro = JSON.parse(e.newValue); }catch(err){} if(!fusionar(otro)) return; }
   if(!RETOS) return;
-  nueva = null;   // la escalera puede haber cambiado debajo del borrador
+  vaciar();   // la escalera puede haber cambiado debajo del borrador
   renderTodo();
 });
 
@@ -74,7 +75,8 @@ function partida(d = S.dia, n = S.nivel){ const p = S.partidas[d] || (S.partidas
 const tocar = p => { p.t = Date.now(); };
 const escalera = () => [reto().a, ...((ver()||{}).pasos || [])];
 const actual = () => { const e = escalera(); return e[e.length-1]; };
-const borrador = () => { const w = actual(); return w.slice(0, sel) + nueva + w.slice(sel+1); };
+const lleno = () => actual().split('').every((c, i)=>escrito[i]);
+const cambios = (w, v) => [...w].filter((c, i)=>c !== v[i]).length;
 const esValida = w => PALABRAS.has(w) || w === reto().b;
 const empezada = p => !!p && (p.pasos.length > 0 || p.pistas > 0 || !!p.res);
 const diaCompleto = d => NIVELES.every(n=>{ const p = ver(d, n); return p && p.res; });
@@ -127,37 +129,46 @@ function cerrarDia(){
 }
 
 // ---------- jugar ----------
+// se escribe en la casilla elegida del borrador y se pasa a la de su derecha; se elige otra tocándola o con las flechas
 function elegir(i){
   const p = ver(); if(p && p.fin) return;
-  i = Math.max(0, Math.min(actual().length-1, i));
-  if(i !== sel) nueva = null;
-  sel = i; renderEscalera(); renderTeclado();
-  const b = document.querySelector('.fila.activa [data-i="'+i+'"]'); if(b && document.activeElement && document.activeElement.closest('.fila.activa')) b.focus();
+  pos = Math.max(0, Math.min(actual().length-1, i)); renderEscalera();
 }
 function escribir(c){
   const p = ver(); if(p && p.fin) return;
   c = norm(c); if(c.length !== 1 || !LETRAS.includes(c)) return;
-  nueva = c === actual()[sel] ? null : c;
+  escrito[pos] = c; pos = Math.min(actual().length-1, pos+1);
   toast(''); renderEscalera(); renderTeclado();
 }
-function borrar(){ if(nueva === null) return; nueva = null; renderEscalera(); renderTeclado(); }
+// Borrar vacía la casilla elegida; si ya estaba vacía, la de su izquierda (y se va a ella)
+function borrar(){
+  if(!escrito[pos] && pos > 0) pos--;
+  if(!escrito[pos]) return renderEscalera();
+  escrito[pos] = ''; renderEscalera(); renderTeclado();
+}
 function fallo(msg){
   toast(msg, 'bad');
   const f = document.querySelector('.fila.borrador'); if(f){ f.classList.remove('mal'); void f.offsetWidth; f.classList.add('mal'); }
 }
 function subir(){
   const p = partida(); if(p.fin) return;
-  if(nueva === null) return toast('Toca una letra de la palabra y escribe la nueva');
-  const w = borrador(), W = w.toUpperCase();
+  if(!lleno()) return toast(hayEscrito() ? 'Escribe la palabra entera' : 'Escribe la palabra nueva');
+  const w = escrito.join(''), W = w.toUpperCase(), n = cambios(w, actual());
+  if(n === 0) return fallo('No has cambiado ninguna letra');
+  if(n > 1) return fallo('Solo puedes cambiar una letra');
   if(!esValida(w)) return fallo('«'+W+'» no está en el diccionario');
   if(escalera().includes(w)) return fallo('«'+W+'» ya está en tu escalera');
-  p.pasos.push(w); tocar(p); nueva = null;
+  p.pasos.push(w); tocar(p); vaciar();
   if(w === reto().b) return llegar();
   save(); toast(''); renderTodo(); verLlegada();
 }
+// Deshacer: si hay algo escrito en el borrador, lo vacía; si no, quita el último peldaño
+const hayEscrito = () => escrito.some(c=>c);
 function deshacer(){
-  const p = ver(); if(!p || p.fin || !p.pasos.length) return;
-  p.pasos.pop(); tocar(p); nueva = null; save(); toast(''); renderTodo();
+  const p = ver(); if(p && p.fin) return;
+  if(hayEscrito()){ vaciar(); toast(''); renderEscalera(); renderTeclado(); return; }
+  if(!p || !p.pasos.length) return;
+  p.pasos.pop(); tocar(p); save(); toast(''); renderTodo();
 }
 // Pista: el siguiente peldaño del camino más corto hasta la llegada, por palabras corrientes (o, si no hay, por
 // cualquiera válida), sin repetir las de la escalera. Se deja como borrador y suma 1.
@@ -166,11 +177,11 @@ function pista(){
   const usadas = new Set(escalera()), b = reto().b, desde = actual();
   const ruta = camino(desde, b, w=>CORRIENTES.has(w) && !usadas.has(w)) || camino(desde, b, w=>PALABRAS.has(w) && !usadas.has(w));
   if(!ruta) return toast('Desde aquí no hay camino: prueba a deshacer', 'bad', 3500);
-  const sig = ruta[1], i = [...sig].findIndex((c, k)=>c !== desde[k]);
-  if(nueva !== null && borrador() === sig) return toast('La pista ya está en el borrador: pulsa Subir');
+  const sig = ruta[1];
+  if(escrito.join('') === sig) return toast('La pista ya está en el borrador: pulsa ✓');
   p.pistas++; tocar(p); save();
-  sel = i; nueva = sig[i];
-  renderTodo(); toast('Pista (+1): pulsa Subir para fijarla', 'good');
+  escrito = [...sig]; pos = 0;
+  renderTodo(); toast('Pista (+1): pulsa ✓ para fijarla', 'good');
 }
 // Rendirse pide confirmación en el propio botón (5 segundos) y luego enseña la ruta del par
 let rendirPlazo;
@@ -186,7 +197,7 @@ function rendirse(){
   }
   restaurarRendirse(); toast('');
   p.fin = 'rendido'; if(!p.res) p.res = {n:p.pasos.length, p:p.pistas, r:true, e:escalera()};
-  tocar(p); nueva = null; cerrarDia(); save(); renderTodo(); abrirResultado();
+  tocar(p); vaciar(); cerrarDia(); save(); renderTodo(); abrirResultado();
 }
 function llegar(){
   const p = partida(); p.fin = 'llegado';
@@ -199,7 +210,7 @@ function llegar(){
 // Volver a jugar: la misma escalera desde cero; el primer resultado sigue siendo el que cuenta
 function otraVez(){
   const p = partida(); p.pasos = []; p.pistas = 0; p.fin = null; p.rep = true; tocar(p);
-  sel = 0; nueva = null; save(); $('resultado').close(); toast(''); renderTodo(); window.scrollTo(0, 0);
+  vaciar(); save(); $('resultado').close(); toast(''); renderTodo(); window.scrollTo(0, 0);
 }
 // el siguiente nivel sin terminar de este día (después del actual y, si no, desde el principio)
 function siguienteNivel(){
@@ -208,13 +219,13 @@ function siguienteNivel(){
 }
 function irNivel(n){
   if(!n || n === S.nivel) return;
-  S.nivel = n; sel = 0; nueva = null; restaurarRendirse(); toast('');
+  S.nivel = n; vaciar(); restaurarRendirse(); toast('');
   if($('resultado').open) $('resultado').close();
   renderTodo(); window.scrollTo(0, 0);
 }
 // al abrir un día se empieza por el primer nivel sin terminar
 const primerNivel = d => NIVELES.find(n=>{ const p = ver(d, n); return !p || !p.res; }) || NIVELES[0];
-function irA(d){ d = Math.min(today(), Math.max(1, d)); S.dia = d; S.nivel = primerNivel(d); sel = 0; nueva = null; restaurarRendirse(); toast(''); renderTodo(); window.scrollTo(0, 0); }
+function irA(d){ d = Math.min(today(), Math.max(1, d)); S.dia = d; S.nivel = primerNivel(d); vaciar(); restaurarRendirse(); toast(''); renderTodo(); window.scrollTo(0, 0); }
 
 // ---------- pintar ----------
 function renderNiveles(){
@@ -245,19 +256,18 @@ function renderEscalera(){
     const tipo = k === 0 ? 'salida' : 'paso', nombre = k === 0 ? 'Salida' : 'Peldaño '+k;
     if(k === esc.length-1 && fin === 'llegado'){
       html += '<div class="fila llegada alcanzada"><span class="sr">'+nombre+', llegada: '+w+'</span>'+celdas(w, b)+'</div>';
-    } else if(k === esc.length-1 && !fin){
-      // fila activa: cada letra es un botón para elegir la que se cambia
-      html += '<div class="fila activa '+tipo+'" role="group" aria-label="'+nombre+': '+w+'. Elige la letra que quieres cambiar">'
-        + [...w].map((c, i)=>'<button type="button" class="celda'+(c===b[i]?' ok':'')+(i===sel?' sel':'')+'" data-i="'+i+'" aria-pressed="'+(i===sel)+'" aria-label="Letra '+(i+1)+': '+c.toUpperCase()+'">'+c+'</button>').join('')
-        + '</div>';
     } else {
       html += '<div class="fila '+tipo+'"><span class="sr">'+nombre+': '+w+'</span>'+celdas(w, b)+'</div>';
     }
   });
   if(!fin){
-    // borrador: la palabra con la letra nueva; sin cambio, huecos vacíos
-    if(nueva === null) html += '<div class="fila borrador vacia" aria-hidden="true">'+[...actual()].map(()=>'<span class="celda">·</span>').join('')+'</div>';
-    else { const w = borrador(); html += '<div class="fila borrador"><span class="sr">Borrador: '+w+'</span>'+celdas(w, b, i=>i===sel?' cambio':'')+'</div>'; }
+    // borrador: cada casilla es un botón para elegir dónde se escribe; lo escrito, en verde si ya está en su sitio y
+    // resaltado si cambia respecto a la palabra anterior; las vacías, con un punto
+    html += '<div class="fila borrador" role="group" aria-label="Borrador. Elige la casilla donde escribir">'
+      + [...actual()].map((c, i)=>{ const e = escrito[i];
+          return '<button type="button" class="celda'+(e ? (e===b[i]?' ok':'')+(e!==c?' cambio':'') : ' hueco')+(i===pos?' sel':'')
+            +'" data-i="'+i+'" aria-pressed="'+(i===pos)+'" aria-label="Casilla '+(i+1)+': '+(e ? e.toUpperCase() : 'vacía')+'">'+(e || '·')+'</button>'; }).join('')
+      + '</div>';
   }
   if(fin !== 'llegado') html += '<div class="tramo" aria-hidden="true"></div><div class="fila llegada"><span class="sr">Llegada: '+b+'</span>'+celdas(b, '')+'</div>';
   $('escalera').innerHTML = html;
@@ -272,15 +282,15 @@ function renderTeclado(){
     $('siguiente-b').hidden = !sig; if(sig){ $('siguiente-b').textContent = NOMBRE[sig]+' →'; $('siguiente-b').setAttribute('aria-label', 'Siguiente nivel: '+NOMBRE[sig]); }
     return;
   }
-  $('deshacer').disabled = !(p && p.pasos.length);
-  const subir = document.querySelector('.tecla.subir'); if(subir) subir.disabled = nueva === null;
+  $('deshacer').disabled = !(hayEscrito() || (p && p.pasos.length));
+  const subir = document.querySelector('.tecla.subir'); if(subir) subir.disabled = !lleno();
 }
 function crearTeclado(){
   const tecla = c => '<button class="tecla" type="button" data-k="'+c+'" aria-label="'+c.toUpperCase()+'">'+c+'</button>';
   $('teclado').innerHTML = TECLAS.map((f, i)=>'<div class="tfila">'
-    + (i === 2 ? '<button class="tecla ancha" type="button" data-k="borrar">Borrar</button>' : '')
+    + (i === 2 ? '<button class="tecla ancha subir" type="button" data-k="subir" aria-label="Subir"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>' : '')
     + [...f].map(tecla).join('')
-    + (i === 2 ? '<button class="tecla ancha subir" type="button" data-k="subir">Subir</button>' : '') + '</div>').join('');
+    + (i === 2 ? '<button class="tecla ancha" type="button" data-k="borrar">Borrar</button>' : '') + '</div>').join('');
 }
 function renderNav(){
   const t = today(), barra = $('otrodia');
@@ -442,7 +452,7 @@ function start(){
   // un clic con el ratón o el dedo no deja el foco en el botón, para que Intro siga subiendo el peldaño
   const sinFoco = e => { if(e.detail > 0 && e.currentTarget.blur) e.currentTarget.blur(); };
   $('niveles').onclick = e=>{ const b = e.target.closest('[data-nivel]'); if(b) irNivel(b.dataset.nivel); };
-  $('escalera').onclick = e=>{ const b = e.target.closest('.fila.activa [data-i]'); if(b) elegir(+b.dataset.i); };
+  $('escalera').onclick = e=>{ const b = e.target.closest('.fila.borrador [data-i]'); if(b){ sinFoco({detail:e.detail, currentTarget:b}); elegir(+b.dataset.i); } };
   $('teclado').onclick = e=>{ const b = e.target.closest('[data-k]'); if(!b) return; sinFoco({detail:e.detail, currentTarget:b});
     const k = b.dataset.k; k === 'borrar' ? borrar() : k === 'subir' ? subir() : escribir(k); };
   $('deshacer').onclick = e=>{ sinFoco(e); deshacer(); };
@@ -469,13 +479,13 @@ function start(){
   $('tab-est').onclick = ()=>pestana('est');
   $('cal-grid').onclick = e=>{ const b = e.target.closest('[data-dia]'); if(!b) return; $('calendario').close(); irA(+b.dataset.dia); };
   dialogos.forEach(d=>d.addEventListener('click', e=>{ if(e.target === d) d.close(); }));   // tocar fuera las cierra
-  // teclado físico: letras, Intro (subir), Retroceso (borrar) y flechas (mover la letra elegida)
+  // teclado físico: letras, Intro (subir), Retroceso (borrar) y flechas (elegir casilla)
   document.addEventListener('keydown', e=>{
     if(abierto() || e.ctrlKey || e.metaKey || e.altKey) return;
-    const enBoton = e.target.closest && e.target.closest('button, a, input') && !e.target.closest('.fila.activa, .teclado');
+    const enBoton = e.target.closest && e.target.closest('button, a, input') && !e.target.closest('.fila.borrador, .teclado');
     if(e.key === 'Enter'){ if(enBoton) return; e.preventDefault(); subir(); }
     else if(e.key === 'Backspace' || e.key === 'Delete'){ e.preventDefault(); borrar(); }
-    else if(e.key === 'ArrowLeft' || e.key === 'ArrowRight'){ if(e.target.closest && e.target.closest('[role="tab"]')) return; e.preventDefault(); elegir(sel + (e.key === 'ArrowLeft' ? -1 : 1)); }
+    else if(e.key === 'ArrowLeft' || e.key === 'ArrowRight'){ if(e.target.closest && e.target.closest('[role="tab"]')) return; e.preventDefault(); elegir(pos + (e.key === 'ArrowLeft' ? -1 : 1)); }
     else if(e.key.length === 1 && LETRAS.includes(norm(e.key))){ e.preventDefault(); escribir(e.key); }
   });
   // cambio de día con la app abierta: si se jugaba el día de hoy, se pasa al nuevo; si uno pasado, se queda en él

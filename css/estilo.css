@@ -86,14 +86,13 @@ h1 .met{color:var(--accent-text)}
 .fila.alcanzada .celda:nth-child(2){animation-delay:.06s}.fila.alcanzada .celda:nth-child(3){animation-delay:.12s}
 .fila.alcanzada .celda:nth-child(4){animation-delay:.18s}.fila.alcanzada .celda:nth-child(5){animation-delay:.24s}
 @keyframes alcanza{0%{transform:scale(.85)}60%{transform:scale(1.08)}100%{transform:none}}
-/* fila activa: cada letra es un botón; la elegida, con borde grueso */
-.fila.activa .celda{cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-.fila.activa .celda.sel{box-shadow:0 0 0 3px var(--bg),0 0 0 6px var(--fg);transform:translateY(-2px)}
-/* borrador: la palabra con la letra cambiada; sin cambio, huecos vacíos */
-.fila.borrador .celda{border-style:dashed;background:transparent}
+/* borrador: la palabra que se escribe; la letra cambiada, con borde grueso; la casilla elegida, levantada y con un aro */
+.fila.borrador .celda{border-style:dashed;background:transparent;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .fila.borrador .celda.ok{background:color-mix(in srgb,var(--accent) 45%,transparent);border-color:var(--accent);color:var(--fg)}
 .fila.borrador .celda.cambio{border:3px solid var(--fg);border-style:solid;animation:asoma-letra .18s ease-out}
-.fila.borrador.vacia .celda{border-color:var(--line);color:transparent}
+.fila.borrador .celda.hueco{border-color:var(--line);color:transparent}
+.fila.borrador .celda.sel{box-shadow:0 0 0 3px var(--bg),0 0 0 6px var(--fg);transform:translateY(-2px)}
+.fila.borrador .celda:focus-visible{outline-color:var(--accent-text)}
 @keyframes asoma-letra{from{transform:scale(.7)}to{transform:none}}
 .fila.mal{animation:sacude .35s ease}
 @keyframes sacude{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
@@ -126,6 +125,7 @@ h1 .met{color:var(--accent-text)}
 .tecla.ancha{flex:1.6 1 0;font-family:var(--body);font-size:.78rem;text-transform:none}
 .tecla.subir{background:var(--fg);color:var(--bg);box-shadow:none}
 .tecla.subir:disabled{opacity:.45;cursor:default}
+.tecla.subir svg{width:1.5em;height:1.5em;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 /* al terminar, en lugar del teclado */
 .terminado{display:flex;flex-direction:column;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}
 .veredicto{margin:0;font-family:var(--display);font-weight:800;font-size:1.4rem}
@@ -150,7 +150,6 @@ h1 .met{color:var(--accent-text)}
 /* foco visible en todos los controles */
 .brand:focus-visible,.redondo:focus-visible,.racha:focus-visible,.nivel:focus-visible,.celda:focus-visible,.btn:focus-visible,.tecla:focus-visible,
 .otro-dia button:focus-visible,.instalar-cerrar:focus-visible,.cal-mes:focus-visible,.cal-dia:focus-visible,.pestanas button:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
-.fila.activa .celda:focus-visible{outline-color:var(--accent-text)}
 
 /* ---------- ventanas ---------- */
 .ventana{width:min(380px,calc(100vw - 32px));max-height:calc(100dvh - 48px);overflow-y:auto;box-sizing:border-box;padding:16px;border:1px solid var(--line);border-radius:18px;background:var(--panel);color:var(--fg);

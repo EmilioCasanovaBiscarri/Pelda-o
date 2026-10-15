@@ -18,10 +18,10 @@ Una escalera que conecta dos palabras. Juego de palabras diario en español: se 
 ## Cómo se juega en pantalla
 
 - La escalera: la palabra de salida arriba (rellena), los peldaños debajo y la de llegada abajo, con contorno discontinuo hasta alcanzarla. Las letras que ya coinciden con la de llegada en su posición van en verde.
-- En la **fila activa** (la última palabra) se toca la letra que se quiere cambiar y se escribe la nueva: aparece una fila de **borrador** con la letra cambiada resaltada. **Subir** fija el peldaño.
-- Teclado en pantalla con ñ (QWERTYUIOP / ASDFGHJKLÑ / ZXCVBNM), **Borrar** y **Subir**. Con teclado físico: letras (las vocales con tilde valen como sin ella), Intro para subir, Retroceso para borrar y flechas para mover la letra elegida.
+- Debajo de la última palabra está la fila de **borrador**, donde se escribe la palabra nueva entera: se toca una casilla (o se elige con las flechas) y se escribe en ella, y el cursor pasa a la de su derecha; **Borrar** vacía la casilla elegida (o, si ya está vacía, la de su izquierda). Las letras que ya coinciden con la de llegada salen en verde y la que cambia respecto a la anterior, resaltada. **✓** (Subir; activo con la fila completa) comprueba que cambia exactamente una letra, que está en el diccionario y que no se repite, y fija el peldaño.
+- Teclado en pantalla con ñ (QWERTYUIOP / ASDFGHJKLÑ / ZXCVBNM), con **✓** (Subir) a la izquierda de la última fila y **Borrar** a la derecha. Con teclado físico: letras (las vocales con tilde valen como sin ella), Intro para subir, Retroceso para borrar y flechas para elegir casilla.
 - Errores en la propia página, sin alertas: «PESU» no está en el diccionario; «PESA» ya está en tu escalera.
-- **Deshacer** quita el último peldaño sin penalizar.
+- **Deshacer** vacía el borrador si hay algo escrito; si no, quita el último peldaño. No penaliza.
 - **Pista** suma 1 al marcador: busca el camino más corto (búsqueda en anchura) desde la palabra actual hasta la de llegada por palabras `corrientes` sin repetir las de la escalera; si no lo hay, por cualquier palabra válida; si tampoco, sugiere deshacer. El siguiente peldaño queda como borrador. Si ya está en el borrador, no se vuelve a cobrar.
 - **Rendirse** pide confirmación en el propio botón («Confirmar», 5 segundos) y enseña la ruta del par.
 - Arriba: nombre, calendario, racha y ayuda; el selector de nivel (con el par o el resultado de cada uno); el número del día y el título del reto; y el marcador (par, peldaños y pistas, en rojo si ya se pasa del par).
