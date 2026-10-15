@@ -25,7 +25,7 @@ Una escalera que conecta dos palabras. Juego de palabras diario en español: se 
 - **Pista** suma 1 al marcador: busca el camino más corto (búsqueda en anchura) desde la palabra actual hasta la de llegada por palabras `corrientes` sin repetir las de la escalera; si no lo hay, por cualquier palabra válida; si tampoco, sugiere deshacer. El siguiente peldaño queda como borrador. Si ya está en el borrador, no se vuelve a cobrar.
 - **Rendirse** pide confirmación en el propio botón («Confirmar», 5 segundos) y enseña la ruta del par.
 - Arriba: nombre, calendario, racha y ayuda; el selector de nivel (con el par o el resultado de cada uno); el número del día y el título del reto; y el marcador (par, peldaños y pistas, en rojo si ya se pasa del par).
-- **Resultado** (al terminar, y luego con «Ver resultado»): veredicto («¡Bajo par!», «En par», «+n sobre el par» o «Te has rendido»), tu escalera, la ruta del par (`sol`), el mínimo absoluto si es menor que el par (`min`), la **Nota curiosa** (`note`) y el texto para compartir con **Copiar resultado**:
+- **Resultado** (con «Ver resultado» al llegar; al rendirse se abre solo, para enseñar la solución): veredicto («¡Bajo par!», «En par», «+n sobre el par» o «Te has rendido»), tu escalera, la ruta del par (`sol`), el mínimo absoluto si es menor que el par (`min`), la **Nota curiosa** (`note`) y el texto para compartir con **Copiar resultado**:
 
   ```
   Peldaño #3 · Intermedio

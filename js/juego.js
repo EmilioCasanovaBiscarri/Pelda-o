@@ -206,8 +206,7 @@ function llegar(){
   if(!p.res) p.res = {n:p.pasos.length, p:p.pistas, r:false, e:escalera()};
   const completo = cerrarDia(); save(); renderTodo();
   const v = veredicto({n:p.pasos.length, p:p.pistas}, reto().par);
-  toast(v.largo + (completo && !p.rep ? ' · ¡Día completado!' : ''), 'grande', 3000);
-  setTimeout(abrirResultado, matchMedia('(prefers-reduced-motion: reduce)').matches ? 400 : 1300);
+  toast(v.largo + (completo && !p.rep ? ' · ¡Día completado!' : ''), 'grande', 3000);   // el resultado, solo con «Ver resultado»
 }
 // Volver a jugar: la misma escalera desde cero; el primer resultado sigue siendo el que cuenta
 function otraVez(){
