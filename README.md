@@ -2,7 +2,7 @@
 
 Una escalera que conecta dos palabras. Juego de palabras diario en español: se baja de una palabra a otra de la misma longitud (4 o 5 letras) cambiando **una sola letra en cada peldaño**, y cada peldaño tiene que ser una palabra válida.
 
-*De la risa a la pena:* risa → pisa → pesa → pena (3 peldaños).
+*De la risa a la pena:* risa → pisa → pesa → pena (2 peldaños: pisa y pesa).
 
 ## Reglas
 
@@ -10,15 +10,15 @@ Una escalera que conecta dos palabras. Juego de palabras diario en español: se 
 - Las tildes no cuentan (pésa = pesa). La **ñ** es una letra propia.
 - No se puede repetir una palabra dentro de la misma escalera.
 - Valen las palabras de la lista `palabras` del diccionario (`data/diccionario.json`).
-- El **par** es el número mínimo de peldaños usando solo palabras corrientes (viene calculado en `data/retos.json`).
+- Los **peldaños** son las palabras intermedias: ni la de salida ni la de llegada cuentan. El **par** es el número mínimo de peldaños usando solo palabras corrientes (viene calculado en `data/retos.json`, y es la longitud de `sol` menos 2).
 - Puntuación tipo golf: peldaños + pistas, frente al par. Menos: «¡Bajo par!» (posible con atajos de palabras raras); igual: «En par»; más: «+1», «+2»…
-- **Tres escaleras al día**, una por nivel: Principiante (par 3–4), Intermedio (par 5) y Experto (par 6 o más). Se elige con el selector de arriba; al terminar una, se ofrece la siguiente. El día está **completado** cuando se terminan las tres (llegando o rindiéndose).
+- **Tres escaleras al día**, una por nivel: Principiante (par 2–3), Intermedio (par 4) y Experto (par 5 o más). Se elige con el selector de arriba; al terminar una, se ofrece la siguiente. El día está **completado** cuando se terminan las tres (llegando o rindiéndose).
 - El **nº 1 es el 15 de octubre de 2026** (constante `LANZAMIENTO` en `js/juego.js`). El reto *n* de cada nivel es el del día *n*; si hay menos retos que días, se vuelve a empezar por el primero.
 
 ## Cómo se juega en pantalla
 
 - La escalera: la palabra de salida arriba (rellena), los peldaños debajo y la de llegada abajo, con contorno discontinuo hasta alcanzarla. Las letras que ya coinciden con la de llegada en su posición van en verde.
-- Debajo de la última palabra está la fila de **borrador**, donde se escribe la palabra nueva entera: se toca una casilla (o se elige con las flechas) y se escribe en ella, y el cursor pasa a la de su derecha; **Borrar** vacía la casilla elegida (o, si ya está vacía, la de su izquierda). Las letras que ya coinciden con la de llegada salen en verde y la que cambia respecto a la anterior, resaltada. **✓** (Subir; activo con la fila completa) comprueba que cambia exactamente una letra, que está en el diccionario y que no se repite, y fija el peldaño. Si la palabra subida está a una letra de la de llegada, el último peldaño se pone solo (y cuenta) y la partida termina.
+- Debajo de la última palabra está la fila de **borrador**, donde se escribe la palabra nueva entera: se toca una casilla (o se elige con las flechas) y se escribe en ella, y el cursor pasa a la de su derecha; **Borrar** vacía la casilla elegida (o, si ya está vacía, la de su izquierda). Las letras que ya coinciden con la de llegada salen en verde y la que cambia respecto a la anterior, resaltada. **✓** (Subir; activo con la fila completa) comprueba que cambia exactamente una letra, que está en el diccionario y que no se repite, y fija el peldaño. Si la palabra subida está a una letra de la de llegada, la palabra de llegada se pone sola (y no cuenta como peldaño) y la partida termina.
 - Teclado en pantalla con ñ (QWERTYUIOP / ASDFGHJKLÑ / ZXCVBNM), con **✓** (Subir) a la izquierda de la última fila y **Borrar** a la derecha. Con teclado físico: letras (las vocales con tilde valen como sin ella), Intro para subir, Retroceso para borrar y flechas para elegir casilla.
 - Errores en la propia página, sin alertas: «PESU» no está en el diccionario; «PESA» ya está en tu escalera.
 - **Deshacer** vacía el borrador si hay algo escrito; si no, quita el último peldaño. No penaliza.
@@ -30,11 +30,11 @@ Una escalera que conecta dos palabras. Juego de palabras diario en español: se 
   ```
   Peldaño #3 · Intermedio
   De la reja al muro
-  🪜 6 peldaños (par 5) · +1
+  🪜 5 peldaños (par 4) · +1
   emiliocasanovabiscarri.github.io/Peldano
   ```
 
-  Con pistas, «🪜 5 peldaños + 1 pista (par 5) · +1»; al rendirse, «🏳️ Me he rendido (par 5)».
+  Con pistas, «🪜 4 peldaños + 1 pista (par 4) · +1»; al rendirse, «🏳️ Me he rendido (par 4)».
 - **Volver a jugar** repite la misma escalera desde cero. El resultado que cuenta (estadísticas, selector, compartir) es siempre el primero; el de la repetición se ve aparte en la ventana de resultado.
 - **Siguiente nivel**: el siguiente sin terminar de ese día.
 

@@ -22,6 +22,7 @@ let RETOS = null, PALABRAS = new Set(), CORRIENTES = new Set();
 // partidas[día][nivel] = {pasos, pistas, fin, res, rep, t}:
 //   pasos: palabras de la escalera tras la de salida; pistas: pistas pedidas; fin: null, 'llegado' o 'rendido';
 //   res: el primer resultado, que es el que cuenta (n peldaños, p pistas, r rendido, e la escalera); no cambia al repetir;
+//   los peldaños son las palabras intermedias: la de llegada no cuenta (ver peldanos).
 //   rep: true si se está repitiendo; t: hora del último cambio (para unir lo de varias pestañas).
 // racha[día] = 1 si ese día se completaron los tres niveles en su fecha.
 let S = {dia:1, nivel:'principiante', partidas:{}, racha:{}};
@@ -30,8 +31,16 @@ let escrito = [], pos = 0;
 const vaciar = () => { escrito = []; pos = 0; };
 
 // ---------- guardar sin pisar a otras pestañas ----------
+// Hasta peldano-v5 la palabra de llegada contaba como peldaño: a lo guardado así se le resta (una sola vez)
+function sinLlegada(s){
+  if(!s || s.sinLlegada) return false;
+  Object.values(s.partidas||{}).forEach(niv=>Object.values(niv).forEach(p=>{ if(p.res && !p.res.r && p.res.n > 0) p.res.n--; }));
+  return s.sinLlegada = true;
+}
 function load(){ try{ const s = JSON.parse(localStorage.getItem(STORE)||'null'); if(!s) return;
+  const viejo = sinLlegada(s);
   S.partidas = s.partidas||{}; S.racha = s.racha||{};
+  if(viejo) save(true);
   // guardado con otra fecha de lanzamiento: cada día se corre para que siga cayendo en su fecha
   if(s.inicio && s.inicio !== LANZAMIENTO){
     const k = Math.round((fechaUTC(s.inicio) - START)/864e5), correr = o => Object.fromEntries(Object.entries(o).map(([d,v])=>[+d+k, v]).filter(([d])=>d >= 1));
@@ -41,6 +50,7 @@ function load(){ try{ const s = JSON.parse(localStorage.getItem(STORE)||'null');
 // reciente (conservando el primer resultado, que es el que cuenta), y los días de racha si cualquiera los tiene.
 function fusionar(otro){
   if(!otro || otro.inicio !== LANZAMIENTO) return false;
+  sinLlegada(otro);
   let cambio = false;
   Object.entries(otro.partidas||{}).forEach(([d, niv])=>Object.entries(niv).forEach(([n, p])=>{
     const mias = S.partidas[d] || (S.partidas[d] = {}), mia = mias[n];
@@ -52,7 +62,7 @@ function fusionar(otro){
 }
 function save(sobrescribir){ try{
   if(!sobrescribir) fusionar(JSON.parse(localStorage.getItem(STORE)||'null'));
-  localStorage.setItem(STORE, JSON.stringify({inicio:LANZAMIENTO, partidas:S.partidas, racha:S.racha})); }catch(e){} }
+  localStorage.setItem(STORE, JSON.stringify({inicio:LANZAMIENTO, sinLlegada:true, partidas:S.partidas, racha:S.racha})); }catch(e){} }
 // cuando otra pestaña guarda, esta se pone al día; si otra borra el progreso (/reiniciar), esta también se vacía
 window.addEventListener('storage', e=>{
   if(e.key !== STORE && e.key !== null) return;
@@ -89,6 +99,8 @@ function veredicto(r, par){
   if(k === 0) return {cls:'par', largo:'En par', corto:'En par', compartir:'En par'};
   return {cls:'sobre', largo:'+'+k+' sobre el par', corto:'+'+k, compartir:'+'+k};
 }
+// peldaños de una partida: las palabras intermedias (la de llegada, que se pone sola, no cuenta)
+const peldanos = p => p.pasos.length - (p.fin === 'llegado' ? 1 : 0);
 const cuenta = r => pl(r.n, 'peldaño', 'peldaños') + (r.p ? ' + '+pl(r.p, 'pista', 'pistas') : '');
 
 // ---------- caminos: búsqueda en anchura cambiando una letra cada vez ----------
@@ -160,7 +172,7 @@ function subir(){
   p.pasos.push(w); tocar(p); vaciar();
   const b = reto().b;
   if(w === b) return llegar();
-  // a una letra de la llegada, el último peldaño es evidente: se pone solo (y cuenta como peldaño)
+  // a una letra de la llegada, la palabra final es evidente: se pone sola (y no cuenta como peldaño)
   if(cambios(w, b) === 1){ p.pasos.push(b); return llegar(); }
   save(); toast(''); renderTodo(); verLlegada();
 }
@@ -203,9 +215,9 @@ function rendirse(){
 }
 function llegar(){
   const p = partida(); p.fin = 'llegado';
-  if(!p.res) p.res = {n:p.pasos.length, p:p.pistas, r:false, e:escalera()};
+  if(!p.res) p.res = {n:peldanos(p), p:p.pistas, r:false, e:escalera()};
   const completo = cerrarDia(); save(); renderTodo();
-  const v = veredicto({n:p.pasos.length, p:p.pistas}, reto().par);
+  const v = veredicto({n:peldanos(p), p:p.pistas}, reto().par);
   toast(v.largo + (completo && !p.rep ? ' · ¡Día completado!' : ''), 'grande', 3000);   // el resultado, solo con «Ver resultado»
 }
 // Volver a jugar: la misma escalera desde cero; el primer resultado sigue siendo el que cuenta
@@ -240,11 +252,12 @@ function renderNiveles(){
 function renderReto(){
   const r = reto(), p = ver() || {pasos:[], pistas:0};
   $('titulo').innerHTML = '<span class="num">Nº '+S.dia+' · </span>'+r.t;
-  $('m-par').textContent = r.par; $('m-pasos').textContent = p.pasos.length; $('m-pistas').textContent = p.pistas;
+  const n = peldanos(p);
+  $('m-par').textContent = r.par; $('m-pasos').textContent = n; $('m-pistas').textContent = p.pistas;
   // por encima del par, los peldaños y las pistas en rojo
-  const sobre = p.pasos.length + p.pistas > r.par;
+  const sobre = n + p.pistas > r.par;
   $('c-pasos').classList.toggle('sobre', sobre); $('c-pistas').classList.toggle('sobre', sobre && p.pistas > 0);
-  $('marcador').setAttribute('aria-label', 'Par '+r.par+'. '+pl(p.pasos.length, 'peldaño', 'peldaños')+'. '+pl(p.pistas, 'pista', 'pistas')+'.');
+  $('marcador').setAttribute('aria-label', 'Par '+r.par+'. '+pl(n, 'peldaño', 'peldaños')+'. '+pl(p.pistas, 'pista', 'pistas')+'.');
   const nota = $('repeticion');
   nota.hidden = !(p.rep && p.res);
   if(p.rep && p.res) nota.textContent = 'Repetición: tu resultado ('+veredicto(p.res, r.par).corto+') ya está guardado';
@@ -322,7 +335,7 @@ function abrirResultado(){
   // al repetir, el resultado de esta vez (el que cuenta sigue siendo el primero)
   const repe = $('res-repe'), estaVez = p.rep && p.fin;
   repe.hidden = !estaVez;
-  if(estaVez){ const rr = {n:p.pasos.length, p:p.pistas, r:p.fin === 'rendido'};
+  if(estaVez){ const rr = {n:peldanos(p), p:p.pistas, r:p.fin === 'rendido'};
     repe.textContent = 'Esta vez: '+(rr.r ? 'te has rendido' : cuenta(rr)+' · '+veredicto(rr, r.par).corto.toLowerCase())+'. Cuenta tu primer resultado.'; }
   const tuya = p.res.e || [r.a];
   $('res-tuya').innerHTML = rutaHTML(tuya, r.b, tuya[tuya.length-1] !== r.b);
@@ -338,7 +351,7 @@ function abrirResultado(){
   const d = $('resultado'); if(!d.open) d.showModal(); d.scrollTop = 0;
   (sig ? bs : $('res-cerrar')).focus({focusVisible:false});
 }
-// Peldaño #3 · Intermedio / De la reja al muro / 🪜 6 peldaños (par 5) · +1 / enlace
+// Peldaño #3 · Intermedio / De la reja al muro / 🪜 5 peldaños (par 4) · +1 / enlace
 function textoCompartir(){
   const r = reto(), p = ver(), v = veredicto(p.res, r.par);
   const linea = p.res.r ? '🏳️ Me he rendido (par '+r.par+')' : '🪜 '+cuenta(p.res)+' (par '+r.par+') · '+v.compartir;

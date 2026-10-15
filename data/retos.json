@@ -4,259 +4,259 @@
    "a": "risa",
    "b": "pena",
    "t": "De la risa a la pena",
-   "par": 3,
+   "par": 2,
    "sol": [
     "risa",
     "pisa",
     "pesa",
     "pena"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Risa viene del latín risus. Pena, del latín poena, que significaba ‘castigo’ y que a su vez se tomó del griego."
   },
   {
    "a": "mago",
    "b": "hada",
    "t": "Del mago al hada",
-   "par": 3,
+   "par": 2,
    "sol": [
     "mago",
     "hago",
     "haga",
     "hada"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Hada viene del latín fata, plural de fatum, ‘destino’: es pariente de hado."
   },
   {
    "a": "sapo",
    "b": "rana",
    "t": "Del sapo a la rana",
-   "par": 3,
+   "par": 2,
    "sol": [
     "sapo",
     "sano",
     "sana",
     "rana"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Rana se ha mantenido casi intacta desde el latín rana. El origen de sapo es incierto; suele considerarse una voz prerromana."
   },
   {
    "a": "mono",
    "b": "gato",
    "t": "Del mono al gato",
-   "par": 3,
+   "par": 2,
    "sol": [
     "mono",
     "mano",
     "gano",
     "gato"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Gato viene del latín tardío cattus, que acabó desplazando a la palabra clásica, feles."
   },
   {
    "a": "cielo",
    "b": "suelo",
    "t": "Del cielo al suelo",
-   "par": 3,
+   "par": 2,
    "sol": [
     "cielo",
     "hielo",
     "huelo",
     "suelo"
    ],
-   "min": 2,
+   "min": 1,
    "note": "Cielo viene del latín caelum y suelo del latín solum. Hay un atajo de dos peldaños por cuelo, del verbo colar."
   },
   {
    "a": "lazo",
    "b": "nudo",
    "t": "Del lazo al nudo",
-   "par": 3,
+   "par": 2,
    "sol": [
     "lazo",
     "lado",
     "nado",
     "nudo"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Lazo viene del latín laqueus y nudo de nodus."
   },
   {
    "a": "mapa",
    "b": "ruta",
    "t": "Del mapa a la ruta",
-   "par": 3,
+   "par": 2,
    "sol": [
     "mapa",
     "mata",
     "rata",
     "ruta"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Mapa viene del latín mappa, que significaba ‘mantel’ o ‘servilleta’: los mapas se dibujaban sobre tela."
   },
   {
    "a": "rosa",
    "b": "lila",
    "t": "De la rosa a la lila",
-   "par": 3,
+   "par": 2,
    "sol": [
     "rosa",
     "losa",
     "lisa",
     "lila"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Lila llegó por el francés lilas, que procede del árabe y, antes, del persa."
   },
   {
    "a": "codo",
    "b": "mano",
    "t": "Del codo a la mano",
-   "par": 3,
+   "par": 2,
    "sol": [
     "codo",
     "modo",
     "mono",
     "mano"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Codo viene del latín cubitus, que también dio el cultismo cúbito."
   },
   {
    "a": "rezar",
    "b": "pecar",
    "t": "De rezar a pecar",
-   "par": 3,
+   "par": 2,
    "sol": [
     "rezar",
     "regar",
     "pegar",
     "pecar"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Rezar viene del latín recitare, ‘recitar’. Pecar procede de peccare."
   },
   {
    "a": "papa",
    "b": "cura",
    "t": "Del papa al cura",
-   "par": 3,
+   "par": 2,
    "sol": [
     "papa",
     "capa",
     "cara",
     "cura"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Cura viene del latín cura, ‘cuidado’: el cura era quien tenía a su cargo el cuidado de las almas."
   },
   {
    "a": "beso",
    "b": "boca",
    "t": "Del beso a la boca",
-   "par": 3,
+   "par": 2,
    "sol": [
     "beso",
     "besa",
     "beca",
     "boca"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Beso viene del latín basium. Boca procede de bucca, que en latín clásico era la mejilla."
   },
   {
    "a": "hoja",
    "b": "rama",
    "t": "De la hoja a la rama",
-   "par": 3,
+   "par": 2,
    "sol": [
     "hoja",
     "roja",
     "raja",
     "rama"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Hoja viene del latín folia, plural de folium: otro caso de f- inicial convertida en h-."
   },
   {
    "a": "pera",
    "b": "lima",
    "t": "De la pera a la lima",
-   "par": 3,
+   "par": 2,
    "sol": [
     "pera",
     "pira",
     "lira",
     "lima"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Pera viene del latín pira, plural de pirum. Lima, la fruta, llegó del árabe."
   },
   {
    "a": "duros",
    "b": "pesos",
    "t": "De los duros a los pesos",
-   "par": 3,
+   "par": 2,
    "sol": [
     "duros",
     "puros",
     "peros",
     "pesos"
    ],
-   "min": 3,
+   "min": 2,
    "note": "El duro debe su nombre al peso duro, la moneda de plata de ocho reales."
   },
   {
    "a": "cola",
    "b": "pelo",
    "t": "De la cola al pelo",
-   "par": 3,
+   "par": 2,
    "sol": [
     "cola",
     "colo",
     "polo",
     "pelo"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Cola viene del latín vulgar coda, variante de cauda."
   },
   {
    "a": "seda",
    "b": "tela",
    "t": "De la seda a la tela",
-   "par": 3,
+   "par": 2,
    "sol": [
     "seda",
     "veda",
     "vela",
     "tela"
    ],
-   "min": 2,
+   "min": 1,
    "note": "Seda viene del latín saeta, que significaba ‘cerda’ o ‘crin’."
   },
   {
    "a": "gallo",
    "b": "pollo",
    "t": "Del gallo al pollo",
-   "par": 3,
+   "par": 2,
    "sol": [
     "gallo",
     "rallo",
     "rollo",
     "pollo"
    ],
-   "min": 2,
+   "min": 1,
    "note": "Pollo viene del latín pullus, que designaba la cría de cualquier animal."
   },
   {
    "a": "toro",
    "b": "vaca",
    "t": "Del toro a la vaca",
-   "par": 4,
+   "par": 3,
    "sol": [
     "toro",
     "taro",
@@ -264,14 +264,14 @@
     "vara",
     "vaca"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Por el camino pasas por tara, que viene del árabe hispánico y significaba ‘deducción’: el peso que se descuenta del envase."
   },
   {
    "a": "vaso",
    "b": "taza",
    "t": "Del vaso a la taza",
-   "par": 4,
+   "par": 3,
    "sol": [
     "vaso",
     "baso",
@@ -279,14 +279,14 @@
     "baza",
     "taza"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Vaso viene del latín vasum. Taza llegó del árabe hispánico."
   },
   {
    "a": "humo",
    "b": "nube",
    "t": "Del humo a la nube",
-   "par": 4,
+   "par": 3,
    "sol": [
     "humo",
     "sumo",
@@ -294,14 +294,14 @@
     "sube",
     "nube"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Humo procede del latín fumus. Es un ejemplo de manual del paso de la f- inicial latina a h-, como en facere > hacer."
   },
   {
    "a": "remo",
    "b": "vela",
    "t": "Del remo a la vela",
-   "par": 4,
+   "par": 3,
    "sol": [
     "remo",
     "temo",
@@ -309,14 +309,14 @@
     "tela",
     "vela"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Remo viene del latín remus. Vela procede de vela, plural de velum, ‘tela’."
   },
   {
    "a": "oeste",
    "b": "norte",
    "t": "Del oeste al norte",
-   "par": 4,
+   "par": 3,
    "sol": [
     "oeste",
     "peste",
@@ -324,14 +324,14 @@
     "porte",
     "norte"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Norte llegó al español a través del francés nord, que lo tomó del inglés antiguo."
   },
   {
    "a": "salsa",
    "b": "caldo",
    "t": "De la salsa al caldo",
-   "par": 4,
+   "par": 3,
    "sol": [
     "salsa",
     "salga",
@@ -339,14 +339,14 @@
     "saldo",
     "caldo"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Salsa viene del latín salsa, ‘salada’. Caldo procede de calidus, ‘caliente’."
   },
   {
    "a": "lana",
    "b": "paño",
    "t": "De la lana al paño",
-   "par": 4,
+   "par": 3,
    "sol": [
     "lana",
     "cana",
@@ -354,14 +354,14 @@
     "caño",
     "paño"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Paño viene del latín pannus. Por el camino aparece caña, del latín canna."
   },
   {
    "a": "pelo",
    "b": "moño",
    "t": "Del pelo al moño",
-   "par": 4,
+   "par": 3,
    "sol": [
     "pelo",
     "polo",
@@ -369,14 +369,14 @@
     "moco",
     "moño"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Pelo viene del latín pilus."
   },
   {
    "a": "cubo",
    "b": "pozo",
    "t": "Del cubo al pozo",
-   "par": 4,
+   "par": 3,
    "sol": [
     "cubo",
     "cuco",
@@ -384,14 +384,14 @@
     "poco",
     "pozo"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Pozo viene del latín puteus."
   },
   {
    "a": "piña",
    "b": "coco",
    "t": "De la piña al coco",
-   "par": 4,
+   "par": 3,
    "sol": [
     "piña",
     "pica",
@@ -399,14 +399,14 @@
     "coca",
     "coco"
    ],
-   "min": 4,
+   "min": 3,
    "note": "El coco era un fantasma para asustar a los niños. Los portugueses llamaron así al fruto porque sus tres manchas parecen una cara."
   },
   {
    "a": "obra",
    "b": "arte",
    "t": "De la obra al arte",
-   "par": 4,
+   "par": 3,
    "sol": [
     "obra",
     "abra",
@@ -414,14 +414,14 @@
     "arre",
     "arte"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Obra viene del latín opera, plural de opus, ‘trabajo’."
   },
   {
    "a": "cafe",
    "b": "taza",
    "t": "Del café a la taza",
-   "par": 4,
+   "par": 3,
    "sol": [
     "cafe",
     "cale",
@@ -429,7 +429,7 @@
     "tala",
     "taza"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Café llegó a través del italiano caffè, del turco kahve, que a su vez procede del árabe."
   }
  ],
@@ -438,7 +438,7 @@
    "a": "carta",
    "b": "sobre",
    "t": "De la carta al sobre",
-   "par": 5,
+   "par": 4,
    "sol": [
     "carta",
     "corta",
@@ -447,14 +447,14 @@
     "sobra",
     "sobre"
    ],
-   "min": 5,
+   "min": 4,
    "note": "Carta viene del latín charta. Sobre, la cubierta de la carta, se formó a partir de la preposición sobre."
   },
   {
    "a": "cerdo",
    "b": "cabra",
    "t": "Del cerdo a la cabra",
-   "par": 5,
+   "par": 4,
    "sol": [
     "cerdo",
     "cerro",
@@ -463,14 +463,14 @@
     "cobra",
     "cabra"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Cabra viene del latín capra. Cerdo procede de cerda, el pelo grueso del animal."
   },
   {
    "a": "fuego",
    "b": "hielo",
    "t": "Del fuego al hielo",
-   "par": 5,
+   "par": 4,
    "sol": [
     "fuego",
     "ruego",
@@ -479,14 +479,14 @@
     "cielo",
     "hielo"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Fuego viene del latín focus, que no significaba ‘fuego’ sino ‘hogar’; el fuego en latín era ignis. Hielo procede de gelu."
   },
   {
    "a": "gozo",
    "b": "pena",
    "t": "Del gozo a la pena",
-   "par": 5,
+   "par": 4,
    "sol": [
     "gozo",
     "pozo",
@@ -495,14 +495,14 @@
     "peca",
     "pena"
    ],
-   "min": 5,
+   "min": 4,
    "note": "Gozo viene del latín gaudium, que también dio el cultismo gaudio."
   },
   {
    "a": "hilo",
    "b": "lana",
    "t": "Del hilo a la lana",
-   "par": 5,
+   "par": 4,
    "sol": [
     "hilo",
     "silo",
@@ -511,14 +511,14 @@
     "sana",
     "lana"
    ],
-   "min": 5,
+   "min": 4,
    "note": "Hilo viene del latín filum: la f- inicial se convirtió en h-."
   },
   {
    "a": "horas",
    "b": "meses",
    "t": "De las horas a los meses",
-   "par": 5,
+   "par": 4,
    "sol": [
     "horas",
     "moras",
@@ -527,14 +527,14 @@
     "mesas",
     "meses"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Mes viene del latín mensis, de la misma familia que mensual."
   },
   {
    "a": "pera",
    "b": "higo",
    "t": "De la pera al higo",
-   "par": 5,
+   "par": 4,
    "sol": [
     "pera",
     "mera",
@@ -543,14 +543,14 @@
     "migo",
     "higo"
    ],
-   "min": 5,
+   "min": 4,
    "note": "Higo viene del latín ficus: la f- inicial se convirtió en h-, como en hilo o hoja."
   },
   {
    "a": "ruido",
    "b": "calma",
    "t": "Del ruido a la calma",
-   "par": 5,
+   "par": 4,
    "sol": [
     "ruido",
     "cuido",
@@ -559,14 +559,14 @@
     "calmo",
     "calma"
    ],
-   "min": 5,
+   "min": 4,
    "note": "Ruido viene del latín rugitus, ‘rugido’."
   },
   {
    "a": "sabio",
    "b": "necio",
    "t": "De sabio a necio",
-   "par": 5,
+   "par": 4,
    "sol": [
     "sabio",
     "salio",
@@ -575,14 +575,14 @@
     "nacio",
     "necio"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Necio viene del latín nescius, ‘el que no sabe’."
   },
   {
    "a": "tomar",
    "b": "dejar",
    "t": "De tomar a dejar",
-   "par": 5,
+   "par": 4,
    "sol": [
     "tomar",
     "tomas",
@@ -591,14 +591,14 @@
     "dejas",
     "dejar"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Dejar viene del latín laxare, ‘aflojar’."
   },
   {
    "a": "volar",
    "b": "nadar",
    "t": "De volar a nadar",
-   "par": 5,
+   "par": 4,
    "sol": [
     "volar",
     "polar",
@@ -607,14 +607,14 @@
     "radar",
     "nadar"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Nadar viene del latín natare. Por el camino pasas por radar, que es un acrónimo inglés."
   },
   {
    "a": "vela",
    "b": "faro",
    "t": "De la vela al faro",
-   "par": 5,
+   "par": 4,
    "sol": [
     "vela",
     "pela",
@@ -623,14 +623,14 @@
     "paro",
     "faro"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Faro viene de Faros, la isla de Alejandría donde se alzaba el faro más famoso de la Antigüedad."
   },
   {
    "a": "reja",
    "b": "muro",
    "t": "De la reja al muro",
-   "par": 5,
+   "par": 4,
    "sol": [
     "reja",
     "ceja",
@@ -639,14 +639,14 @@
     "mero",
     "muro"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Muro viene del latín murus."
   },
   {
    "a": "bala",
    "b": "arma",
    "t": "De la bala al arma",
-   "par": 5,
+   "par": 4,
    "sol": [
     "bala",
     "cala",
@@ -655,14 +655,14 @@
     "aria",
     "arma"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Arma viene del latín arma, que era un plural: ‘las armas’."
   },
   {
    "a": "panes",
    "b": "migas",
    "t": "De los panes a las migas",
-   "par": 5,
+   "par": 4,
    "sol": [
     "panes",
     "pines",
@@ -671,14 +671,14 @@
     "minas",
     "migas"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Miga viene del latín mica, ‘partícula’."
   },
   {
    "a": "tacto",
    "b": "vista",
    "t": "Del tacto a la vista",
-   "par": 5,
+   "par": 4,
    "sol": [
     "tacto",
     "pacto",
@@ -687,14 +687,14 @@
     "visto",
     "vista"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Tacto viene del latín tactus, participio de tangere, ‘tocar’."
   },
   {
    "a": "foca",
    "b": "pato",
    "t": "De la foca al pato",
-   "par": 5,
+   "par": 4,
    "sol": [
     "foca",
     "boca",
@@ -703,14 +703,14 @@
     "pata",
     "pato"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Foca viene del latín phoca, tomado del griego."
   },
   {
    "a": "paja",
    "b": "heno",
    "t": "De la paja al heno",
-   "par": 5,
+   "par": 4,
    "sol": [
     "paja",
     "caja",
@@ -719,14 +719,14 @@
     "ceno",
     "heno"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Heno viene del latín fenum: otra f- inicial convertida en h-."
   },
   {
    "a": "tejon",
    "b": "raton",
    "t": "Del tejón al ratón",
-   "par": 5,
+   "par": 4,
    "sol": [
     "tejon",
     "telon",
@@ -735,14 +735,14 @@
     "baton",
     "raton"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Tejón viene del latín taxo, taxonis. Ratón es un derivado de rata. La escalera pasa por telón, talón, balón y batón."
   },
   {
    "a": "cabra",
    "b": "gallo",
    "t": "De la cabra al gallo",
-   "par": 5,
+   "par": 4,
    "sol": [
     "cabra",
     "habra",
@@ -751,14 +751,14 @@
     "hallo",
     "gallo"
    ],
-   "min": 5,
+   "min": 4,
    "note": "Por el camino aparece habla. Hablar viene del latín fabulari, ‘conversar’: otra f- inicial convertida en h-."
   },
   {
    "a": "cerdo",
    "b": "cebra",
    "t": "Del cerdo a la cebra",
-   "par": 5,
+   "par": 4,
    "sol": [
     "cerdo",
     "cerro",
@@ -767,14 +767,14 @@
     "cobra",
     "cebra"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Zebra o cebra era el nombre del asno salvaje de la península. Los portugueses lo aplicaron después al animal africano."
   },
   {
    "a": "pasta",
    "b": "fruta",
    "t": "De la pasta a la fruta",
-   "par": 5,
+   "par": 4,
    "sol": [
     "pasta",
     "gasta",
@@ -783,14 +783,14 @@
     "frita",
     "fruta"
    ],
-   "min": 5,
+   "min": 4,
    "note": "Fruta viene del latín fructa, plural de fructus. Por el camino pasas por gaita."
   },
   {
    "a": "salsa",
    "b": "pollo",
    "t": "De la salsa al pollo",
-   "par": 5,
+   "par": 4,
    "sol": [
     "salsa",
     "balsa",
@@ -799,14 +799,14 @@
     "bollo",
     "pollo"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Bolsa viene del latín bursa, tomado del griego býrsa, ‘cuero’. Pollo procede de pullus."
   },
   {
    "a": "barba",
    "b": "panza",
    "t": "De la barba a la panza",
-   "par": 5,
+   "par": 4,
    "sol": [
     "barba",
     "barca",
@@ -815,14 +815,14 @@
     "panda",
     "panza"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Panza viene del latín pantex. Barba sigue siendo la latina barba."
   },
   {
    "a": "jarra",
    "b": "cesta",
    "t": "De la jarra a la cesta",
-   "par": 5,
+   "par": 4,
    "sol": [
     "jarra",
     "parra",
@@ -831,14 +831,14 @@
     "casta",
     "cesta"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Jarra viene del árabe hispánico. Cesta procede del latín cista."
   },
   {
    "a": "llano",
    "b": "prado",
    "t": "Del llano al prado",
-   "par": 5,
+   "par": 4,
    "sol": [
     "llano",
     "llamo",
@@ -847,14 +847,14 @@
     "arado",
     "prado"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Llano viene del latín planus: el grupo pl- inicial dio ll-, como en plorare > llorar."
   },
   {
    "a": "arena",
    "b": "brisa",
    "t": "De la arena a la brisa",
-   "par": 5,
+   "par": 4,
    "sol": [
     "arena",
     "frena",
@@ -863,14 +863,14 @@
     "prisa",
     "brisa"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Arena viene del latín harena. La arena de las plazas de toros toma su nombre de la que cubría los anfiteatros romanos."
   },
   {
    "a": "valle",
    "b": "selva",
    "t": "Del valle a la selva",
-   "par": 5,
+   "par": 4,
    "sol": [
     "valle",
     "calle",
@@ -879,14 +879,14 @@
     "salva",
     "selva"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Selva viene del latín silva, que también dio silvestre."
   },
   {
    "a": "dias",
    "b": "años",
    "t": "De los días a los años",
-   "par": 5,
+   "par": 4,
    "sol": [
     "dias",
     "tias",
@@ -895,14 +895,14 @@
     "aros",
     "años"
    ],
-   "min": 5,
+   "min": 4,
    "note": "Año viene del latín annus: la nn doble latina dio ñ, como en pannus > paño."
   },
   {
    "a": "nieve",
    "b": "hielo",
    "t": "De la nieve al hielo",
-   "par": 5,
+   "par": 4,
    "sol": [
     "nieve",
     "nueve",
@@ -911,7 +911,7 @@
     "huelo",
     "hielo"
    ],
-   "min": 3,
+   "min": 2,
    "note": "Nieve viene del latín nix, nivis."
   }
  ],
@@ -920,7 +920,7 @@
    "a": "monte",
    "b": "valle",
    "t": "Del monte al valle",
-   "par": 6,
+   "par": 5,
    "sol": [
     "monte",
     "monta",
@@ -930,14 +930,14 @@
     "valla",
     "valle"
    ],
-   "min": 5,
+   "min": 4,
    "note": "Monte procede del latín mons, montis, y valle de vallis. Las dos palabras han llegado al español casi sin cambios."
   },
   {
    "a": "nuevo",
    "b": "viejo",
    "t": "De lo nuevo a lo viejo",
-   "par": 7,
+   "par": 6,
    "sol": [
     "nuevo",
     "nueva",
@@ -948,14 +948,14 @@
     "vieja",
     "viejo"
    ],
-   "min": 6,
+   "min": 5,
    "note": "Nuevo viene del latín novus. Viejo no viene de vetus, sino de su diminutivo vetulus, ‘viejecito’: el diminutivo acabó desplazando a la palabra original."
   },
   {
    "a": "sacar",
    "b": "meter",
    "t": "De sacar a meter",
-   "par": 6,
+   "par": 5,
    "sol": [
     "sacar",
     "secar",
@@ -965,14 +965,14 @@
     "metes",
     "meter"
    ],
-   "min": 6,
+   "min": 5,
    "note": "Meter viene del latín mittere, que significaba ‘enviar’ o ‘soltar’. Sacar procede probablemente del gótico sakan, ‘pleitear’."
   },
   {
    "a": "calma",
    "b": "furia",
    "t": "De la calma a la furia",
-   "par": 7,
+   "par": 6,
    "sol": [
     "calma",
     "calla",
@@ -983,14 +983,14 @@
     "feria",
     "furia"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Calma viene del griego kaûma, ‘calor ardiente’: la calma era la quietud del aire en las horas de más calor. Furia sigue siendo la latina furia."
   },
   {
    "a": "tinta",
    "b": "papel",
    "t": "De la tinta al papel",
-   "par": 8,
+   "par": 7,
    "sol": [
     "tinta",
     "pinta",
@@ -1002,14 +1002,14 @@
     "panel",
     "papel"
    ],
-   "min": 6,
+   "min": 5,
    "note": "Tinta viene del latín tincta, ‘teñida’. Papel llegó a través del catalán paper, que procede del latín papyrus."
   },
   {
    "a": "zorro",
    "b": "gallo",
    "t": "Del zorro al gallo",
-   "par": 6,
+   "par": 5,
    "sol": [
     "zorro",
     "corro",
@@ -1019,14 +1019,14 @@
     "callo",
     "gallo"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Gallo viene del latín gallus. Zorro tiene un origen discutido; una hipótesis lo relaciona con zorrar, ‘arrastrar’, por la cola que arrastra."
   },
   {
    "a": "nacer",
    "b": "morir",
    "t": "De nacer a morir",
-   "par": 8,
+   "par": 7,
    "sol": [
     "nacer",
     "nacar",
@@ -1038,14 +1038,14 @@
     "morar",
     "morir"
    ],
-   "min": 5,
+   "min": 4,
    "note": "Nacer y morir vienen del latín vulgar nascere y morire, que sustituyeron a las formas clásicas nasci y mori. Por el camino pasas por nácar y morar."
   },
   {
    "a": "listo",
    "b": "tonto",
    "t": "De listo a tonto",
-   "par": 6,
+   "par": 5,
    "sol": [
     "listo",
     "lista",
@@ -1055,14 +1055,14 @@
     "tonta",
     "tonto"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Tonto se considera una voz de creación expresiva, como bobo. Listo es de origen incierto."
   },
   {
    "a": "techo",
    "b": "suelo",
    "t": "Del techo al suelo",
-   "par": 7,
+   "par": 6,
    "sol": [
     "techo",
     "lecho",
@@ -1073,14 +1073,14 @@
     "duelo",
     "suelo"
    ],
-   "min": 7,
+   "min": 6,
    "note": "Techo viene del latín tectum, participio de tegere, ‘cubrir’, el mismo verbo que dio teja. Por el camino aparece ducho, del latín ductus, ‘conducido’."
   },
   {
    "a": "llave",
    "b": "cofre",
    "t": "De la llave al cofre",
-   "par": 9,
+   "par": 8,
    "sol": [
     "llave",
     "clave",
@@ -1093,14 +1093,14 @@
     "cobre",
     "cofre"
    ],
-   "min": 6,
+   "min": 5,
    "note": "Llave y clave son la misma palabra latina, clavis: llave es la forma patrimonial, con cl- convertido en ll-, y clave el cultismo. El primer peldaño las une."
   },
   {
    "a": "coser",
    "b": "tejer",
    "t": "De coser a tejer",
-   "par": 6,
+   "par": 5,
    "sol": [
     "coser",
     "comer",
@@ -1110,14 +1110,14 @@
     "temer",
     "tejer"
    ],
-   "min": 4,
+   "min": 3,
    "note": "Tejer viene del latín texere, de la misma familia que texto y textil: un texto era, en origen, un tejido de palabras. Coser procede de consuere."
   },
   {
    "a": "cinco",
    "b": "nueve",
    "t": "Del cinco al nueve",
-   "par": 9,
+   "par": 8,
    "sol": [
     "cinco",
     "circo",
@@ -1130,14 +1130,14 @@
     "nuevo",
     "nueve"
    ],
-   "min": 6,
+   "min": 5,
    "note": "Nueve y nuevo suenan casi igual, pero son palabras distintas: nueve viene de novem y nuevo de novus. La escalera pasa por las dos."
   },
   {
    "a": "santa",
    "b": "bruja",
    "t": "De santa a bruja",
-   "par": 8,
+   "par": 7,
    "sol": [
     "santa",
     "canta",
@@ -1149,14 +1149,14 @@
     "bruta",
     "bruja"
    ],
-   "min": 6,
+   "min": 5,
    "note": "Santa viene del latín sanctus. Bruja es una palabra de origen incierto, probablemente prerromana, con parientes en catalán y portugués."
   },
   {
    "a": "silla",
    "b": "banco",
    "t": "De la silla al banco",
-   "par": 7,
+   "par": 6,
    "sol": [
     "silla",
     "milla",
@@ -1167,14 +1167,14 @@
     "manco",
     "banco"
    ],
-   "min": 6,
+   "min": 5,
    "note": "Silla viene del latín sella. Banco es de origen germánico; el banco de dinero se llamó así por la mesa o banco del cambista."
   },
   {
    "a": "leche",
    "b": "queso",
    "t": "De la leche al queso",
-   "par": 9,
+   "par": 8,
    "sol": [
     "leche",
     "lecho",
@@ -1187,14 +1187,14 @@
     "hueso",
     "queso"
    ],
-   "min": 8,
+   "min": 7,
    "note": "Leche viene del latín lac, lactis. Queso procede de caseus, que también dio caseína."
   },
   {
    "a": "subir",
    "b": "bajar",
    "t": "De subir a bajar",
-   "par": 8,
+   "par": 7,
    "sol": [
     "subir",
     "subia",
@@ -1206,14 +1206,14 @@
     "bajas",
     "bajar"
    ],
-   "min": 5,
+   "min": 4,
    "note": "Subir viene del latín subire. Bajar procede del latín vulgar bassiare, derivado de bassus, ‘bajo’."
   },
   {
    "a": "sello",
    "b": "carta",
    "t": "Del sello a la carta",
-   "par": 6,
+   "par": 5,
    "sol": [
     "sello",
     "sella",
@@ -1223,14 +1223,14 @@
     "sarta",
     "carta"
    ],
-   "min": 5,
+   "min": 4,
    "note": "Sello viene del latín sigillum, diminutivo de signum, ‘señal’. Carta procede del latín charta, tomado del griego, que designaba una hoja de papiro."
   },
   {
    "a": "feria",
    "b": "toros",
    "t": "De la feria a los toros",
-   "par": 9,
+   "par": 8,
    "sol": [
     "feria",
     "veria",
@@ -1243,14 +1243,14 @@
     "poros",
     "toros"
    ],
-   "min": 6,
+   "min": 5,
    "note": "Feria viene del latín feria, ‘día de fiesta’. De ahí también feriado, el día en que no se trabaja."
   },
   {
    "a": "cesta",
    "b": "bolsa",
    "t": "De la cesta a la bolsa",
-   "par": 7,
+   "par": 6,
    "sol": [
     "cesta",
     "casta",
@@ -1261,14 +1261,14 @@
     "balsa",
     "bolsa"
    ],
-   "min": 5,
+   "min": 4,
    "note": "Cesta viene del latín cista. Bolsa procede de bursa, que a su vez viene del griego býrsa, ‘cuero’."
   },
   {
    "a": "julio",
    "b": "marzo",
    "t": "De julio a marzo",
-   "par": 10,
+   "par": 9,
    "sol": [
     "julio",
     "junio",
@@ -1282,14 +1282,14 @@
     "marco",
     "marzo"
    ],
-   "min": 6,
+   "min": 5,
    "note": "Julio debe su nombre a Julio César y marzo a Marte, el dios de la guerra. Por el camino pasas por junio, el mes de la diosa Juno."
   },
   {
    "a": "canto",
    "b": "grito",
    "t": "Del canto al grito",
-   "par": 6,
+   "par": 5,
    "sol": [
     "canto",
     "canta",
@@ -1299,14 +1299,14 @@
     "grita",
     "grito"
    ],
-   "min": 5,
+   "min": 4,
    "note": "Canto viene del latín cantus. Grito es un derivado de gritar, que procede del latín quiritare, ‘pedir auxilio’."
   },
   {
    "a": "huevo",
    "b": "gallo",
    "t": "Del huevo al gallo",
-   "par": 9,
+   "par": 8,
    "sol": [
     "huevo",
     "muevo",
@@ -1319,14 +1319,14 @@
     "callo",
     "gallo"
    ],
-   "min": 5,
+   "min": 4,
    "note": "Huevo viene del latín ovum. La h no es etimológica: se añadió para que la u inicial se leyera como vocal y no como v."
   },
   {
    "a": "villa",
    "b": "corte",
    "t": "De la villa a la corte",
-   "par": 8,
+   "par": 7,
    "sol": [
     "villa",
     "milla",
@@ -1338,14 +1338,14 @@
     "corta",
     "corte"
    ],
-   "min": 5,
+   "min": 4,
    "note": "Villa era en latín la casa de campo. Corte viene de cohors, cohortis, que designaba un recinto cercado y luego el séquito que rodeaba al rey."
   },
   {
    "a": "comer",
    "b": "beber",
    "t": "De comer a beber",
-   "par": 8,
+   "par": 7,
    "sol": [
     "comer",
     "comes",
@@ -1357,14 +1357,14 @@
     "bebes",
     "beber"
    ],
-   "min": 6,
+   "min": 5,
    "note": "Comer viene del latín comedere, ‘comérselo todo’, formado con com- y edere. Beber procede de bibere."
   },
   {
    "a": "manto",
    "b": "cetro",
    "t": "Del manto al cetro",
-   "par": 7,
+   "par": 6,
    "sol": [
     "manto",
     "canto",
@@ -1375,14 +1375,14 @@
     "cerro",
     "cetro"
    ],
-   "min": 6,
+   "min": 5,
    "note": "Cetro viene del latín sceptrum, tomado del griego skêptron, que significaba ‘bastón’."
   },
   {
    "a": "llama",
    "b": "brasa",
    "t": "De la llama a la brasa",
-   "par": 9,
+   "par": 8,
    "sol": [
     "llama",
     "llamo",
@@ -1395,14 +1395,14 @@
     "grasa",
     "brasa"
    ],
-   "min": 5,
+   "min": 4,
    "note": "Llama viene del latín flamma: el grupo fl- inicial dio ll-. La llama de los Andes es otra palabra, de origen quechua."
   },
   {
    "a": "barro",
    "b": "polvo",
    "t": "Del barro al polvo",
-   "par": 8,
+   "par": 7,
    "sol": [
     "barro",
     "carro",
@@ -1414,14 +1414,14 @@
     "pollo",
     "polvo"
    ],
-   "min": 5,
+   "min": 4,
    "note": "Polvo viene del latín pulvis, pulveris. Barro es una voz prerromana."
   },
   {
    "a": "perro",
    "b": "gatos",
    "t": "Del perro a los gatos",
-   "par": 9,
+   "par": 8,
    "sol": [
     "perro",
     "perra",
@@ -1434,14 +1434,14 @@
     "gatas",
     "gatos"
    ],
-   "min": 6,
+   "min": 5,
    "note": "Perro es una palabra exclusiva del castellano y de origen incierto. El latín canis sobrevive en can y en canino."
   },
   {
    "a": "poeta",
    "b": "verso",
    "t": "Del poeta al verso",
-   "par": 10,
+   "par": 9,
    "sol": [
     "poeta",
     "porta",
@@ -1455,14 +1455,14 @@
     "verse",
     "verso"
    ],
-   "min": 5,
+   "min": 4,
    "note": "Verso viene del latín versus, ‘vuelta’: cada línea del poema se vuelve al llegar al final. Poeta viene del griego poietés, ‘el que hace’."
   },
   {
    "a": "nube",
    "b": "rayo",
    "t": "De la nube al rayo",
-   "par": 6,
+   "par": 5,
    "sol": [
     "nube",
     "sube",
@@ -1472,7 +1472,7 @@
     "rabo",
     "rayo"
    ],
-   "min": 5,
+   "min": 4,
    "note": "Rayo y radio son la misma palabra latina, radius: rayo es la forma patrimonial y radio el cultismo."
   }
  ]
