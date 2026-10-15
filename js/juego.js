@@ -24,7 +24,7 @@ let RETOS = null, PALABRAS = new Set(), CORRIENTES = new Set();
 //   res: el primer resultado, que es el que cuenta (n peldaños, p pistas, r rendido, e la escalera); no cambia al repetir;
 //   los peldaños son las palabras intermedias: la de llegada no cuenta (ver peldanos).
 //   rep: true si se está repitiendo; t: hora del último cambio (para unir lo de varias pestañas).
-// racha[día] = 1 si ese día se completaron los tres niveles en su fecha.
+// racha[día] = 1 si ese día se llegó al final de al menos un nivel en su fecha (rendirse no cuenta).
 let S = {dia:1, nivel:'principiante', partidas:{}, racha:{}};
 // lo que se está escribiendo en el borrador (no se guarda): una letra por casilla ('' si está vacía) y la casilla elegida
 let escrito = [], pos = 0;
@@ -37,8 +37,15 @@ function sinLlegada(s){
   Object.values(s.partidas||{}).forEach(niv=>Object.values(niv).forEach(p=>{ if(p.res && !p.res.r && p.res.n > 0) p.res.n--; }));
   return s.sinLlegada = true;
 }
+// Hasta peldano-v8 rendirse también mantenía la racha: se quitan (una sola vez) los días en que ningún nivel
+// tiene un primer resultado llegando
+function soloLlegadas(s){
+  if(!s || s.soloLlegadas) return false;
+  Object.keys(s.racha||{}).forEach(d=>{ if(!Object.values((s.partidas||{})[d]||{}).some(p=>p.res && !p.res.r)) delete s.racha[d]; });
+  return s.soloLlegadas = true;
+}
 function load(){ try{ const s = JSON.parse(localStorage.getItem(STORE)||'null'); if(!s) return;
-  const viejo = sinLlegada(s);
+  const viejo = sinLlegada(s) | soloLlegadas(s);
   S.partidas = s.partidas||{}; S.racha = s.racha||{};
   if(viejo) save(true);
   // guardado con otra fecha de lanzamiento: cada día se corre para que siga cayendo en su fecha
@@ -50,7 +57,7 @@ function load(){ try{ const s = JSON.parse(localStorage.getItem(STORE)||'null');
 // reciente (conservando el primer resultado, que es el que cuenta), y los días de racha si cualquiera los tiene.
 function fusionar(otro){
   if(!otro || otro.inicio !== LANZAMIENTO) return false;
-  sinLlegada(otro);
+  sinLlegada(otro); soloLlegadas(otro);
   let cambio = false;
   Object.entries(otro.partidas||{}).forEach(([d, niv])=>Object.entries(niv).forEach(([n, p])=>{
     const mias = S.partidas[d] || (S.partidas[d] = {}), mia = mias[n];
@@ -62,7 +69,7 @@ function fusionar(otro){
 }
 function save(sobrescribir){ try{
   if(!sobrescribir) fusionar(JSON.parse(localStorage.getItem(STORE)||'null'));
-  localStorage.setItem(STORE, JSON.stringify({inicio:LANZAMIENTO, sinLlegada:true, partidas:S.partidas, racha:S.racha})); }catch(e){} }
+  localStorage.setItem(STORE, JSON.stringify({inicio:LANZAMIENTO, sinLlegada:true, soloLlegadas:true, partidas:S.partidas, racha:S.racha})); }catch(e){} }
 // cuando otra pestaña guarda, esta se pone al día; si otra borra el progreso (/reiniciar), esta también se vacía
 window.addEventListener('storage', e=>{
   if(e.key !== STORE && e.key !== null) return;
@@ -102,6 +109,8 @@ function veredicto(r, par){
 // peldaños de una partida: las palabras intermedias (la de llegada, que se pone sola, no cuenta)
 const peldanos = p => p.pasos.length - (p.fin === 'llegado' ? 1 : 0);
 const cuenta = r => pl(r.n, 'peldaño', 'peldaños') + (r.p ? ' + '+pl(r.p, 'pista', 'pistas') : '');
+// al rendirse: «Tras 2 peldaños + 1 pista», o sin ninguno, «Sin peldaños» (y «· 1 pista» si las hubo)
+const tras = r => r.n ? 'Tras '+cuenta(r) : 'Sin peldaños' + (r.p ? ' · '+pl(r.p, 'pista', 'pistas') : '');
 
 // ---------- caminos: búsqueda en anchura cambiando una letra cada vez ----------
 function* vecinos(w){ for(let i = 0; i < w.length; i++) for(const c of LETRAS) if(c !== w[i]) yield w.slice(0, i) + c + w.slice(i+1); }
@@ -116,8 +125,8 @@ function camino(desde, hasta, vale){
   return null;
 }
 
-// ---------- racha: días seguidos terminando al menos un nivel en su fecha ----------
-// Sigue viva si hoy aún no has terminado ninguno pero ayer sí; se rompe al saltarte un día entero.
+// ---------- racha: días seguidos llegando al final de al menos un nivel en su fecha (rendirse no cuenta) ----------
+// Sigue viva si hoy aún no has llegado en ninguno pero ayer sí; se rompe al saltarte un día entero.
 function rachaHasta(d){ let n = 0; while(d >= 1 && S.racha[d]){ n++; d--; } return n; }
 function rachaActual(){ const t = today(); return rachaHasta(S.racha[t] ? t : t-1); }
 function rachaMejor(){ let mejor = 0, n = 0; const t = today(); for(let d = 1; d <= t; d++){ n = S.racha[d] ? n+1 : 0; mejor = Math.max(mejor, n); } return mejor; }
@@ -125,17 +134,19 @@ function renderRacha(){
   const r = rachaActual(), hoy = !!S.racha[today()], el = $('racha');
   $('rachan').textContent = r;
   el.className = 'racha' + (hoy ? ' hoy' : r ? ' pendiente' : '');
-  el.setAttribute('aria-label', 'Racha: '+pl(r, 'día seguido', 'días seguidos')+(hoy || !r ? '' : '. Termina hoy un nivel para mantenerla'));
+  el.setAttribute('aria-label', 'Racha: '+pl(r, 'día seguido', 'días seguidos')+(hoy || !r ? '' : '. Llega hoy al final de un nivel para mantenerla'));
 }
 function toastRacha(){
   const r = rachaActual(), m = rachaMejor(), hoy = !!S.racha[today()];
-  toast(r ? 'Racha: '+pl(r, 'día', 'días')+' · Mejor: '+m+(hoy ? '' : ' · ¡Termina hoy un nivel!')
+  toast(r ? 'Racha: '+pl(r, 'día', 'días')+' · Mejor: '+m+(hoy ? '' : ' · ¡Llega hoy al final de un nivel!')
           : m ? 'Sin racha ahora · Mejor: '+pl(m, 'día', 'días')
-              : 'Termina un nivel de hoy para empezar una racha', r ? 'good' : '', 3500);
+              : 'Llega al final de un nivel de hoy para empezar una racha', r ? 'good' : '', 3500);
 }
-// al terminar un nivel: si es hoy, el día cuenta para la racha; devuelve si con él quedan los tres (día completo)
+// al terminar un nivel: si es hoy y su primer resultado es haber llegado, el día cuenta para la racha;
+// devuelve si con él quedan los tres terminados, llegando o rindiéndose (día completo)
 function cerrarDia(){
-  if(S.dia === today()) S.racha[S.dia] = 1;
+  const p = ver();
+  if(S.dia === today() && p && p.res && !p.res.r) S.racha[S.dia] = 1;
   return diaCompleto(S.dia);
 }
 
@@ -180,9 +191,9 @@ function subir(){
 const hayEscrito = () => escrito.some(c=>c);
 function deshacer(){
   const p = ver(); if(p && p.fin) return;
-  if(hayEscrito()){ vaciar(); toast(''); renderEscalera(); renderTeclado(); return; }
+  if(hayEscrito()){ vaciar(); toast(''); renderEscalera(); renderTeclado(); verLlegada(); return; }
   if(!p || !p.pasos.length) return;
-  p.pasos.pop(); tocar(p); save(); toast(''); renderTodo();
+  p.pasos.pop(); tocar(p); save(); toast(''); renderTodo(); verLlegada();
 }
 // Pista: el siguiente peldaño del camino más corto hasta la llegada, por palabras corrientes (o, si no hay, por
 // cualquiera válida), sin repetir las de la escalera. Se deja como borrador y suma 1.
@@ -207,7 +218,7 @@ function pista(){
   restaurarPista();
   p.pistas++; tocar(p); save();
   escrito = [...sig]; pos = 0;
-  renderTodo(); toast('Pista (+1): pulsa ✓ para fijarla', 'good');
+  renderTodo(); verLlegada(); toast('Pista (+1): pulsa ✓ para fijarla', 'good');
 }
 // Rendirse pide confirmación en el propio botón (5 segundos) y luego enseña la ruta del par
 let rendirPlazo;
@@ -229,14 +240,14 @@ function rendirse(){
 function llegar(){
   const p = partida(); p.fin = 'llegado';
   if(!p.res) p.res = {n:peldanos(p), p:p.pistas, r:false, e:escalera()};
-  const completo = cerrarDia(); save(); renderTodo();
-  const v = veredicto({n:peldanos(p), p:p.pistas}, reto().par);
-  toast(v.largo + (completo && !p.rep ? ' · ¡Día completado!' : ''), 'grande', 3000);   // el resultado, solo con «Ver resultado»
+  const completo = cerrarDia(); save(); renderTodo(); verLlegada();
+  // el veredicto ya sale en el panel de abajo: el aviso, solo si con este nivel se completa el día
+  toast(completo && !p.rep ? '¡Día completado!' : '', 'grande', 3000);
 }
 // Volver a jugar: la misma escalera desde cero; el primer resultado sigue siendo el que cuenta
 function otraVez(){
   const p = partida(); p.pasos = []; p.pistas = 0; p.fin = null; p.rep = true; tocar(p);
-  vaciar(); save(); $('resultado').close(); toast(''); renderTodo(); window.scrollTo(0, 0);
+  vaciar(); save(); $('resultado').close(); toast(''); renderTodo(); window.scrollTo(0, 0); verLlegada(false);
 }
 // el siguiente nivel sin terminar de este día (después del actual y, si no, desde el principio)
 function siguienteNivel(){
@@ -247,11 +258,11 @@ function irNivel(n){
   if(!n || n === S.nivel) return;
   S.nivel = n; vaciar(); restaurarRendirse(); restaurarPista(); toast('');
   if($('resultado').open) $('resultado').close();
-  renderTodo(); window.scrollTo(0, 0);
+  renderTodo(); window.scrollTo(0, 0); verLlegada(false);
 }
 // al abrir un día se empieza por el primer nivel sin terminar
 const primerNivel = d => NIVELES.find(n=>{ const p = ver(d, n); return !p || !p.res; }) || NIVELES[0];
-function irA(d){ d = Math.min(today(), Math.max(1, d)); S.dia = d; S.nivel = primerNivel(d); vaciar(); restaurarRendirse(); restaurarPista(); toast(''); renderTodo(); window.scrollTo(0, 0); }
+function irA(d){ d = Math.min(today(), Math.max(1, d)); S.dia = d; S.nivel = primerNivel(d); vaciar(); restaurarRendirse(); restaurarPista(); toast(''); renderTodo(); window.scrollTo(0, 0); verLlegada(false); }
 
 // ---------- pintar ----------
 function renderNiveles(){
@@ -297,7 +308,10 @@ function renderEscalera(){
       + '</div>';
   }
   if(fin !== 'llegado') html += '<div class="tramo" aria-hidden="true"></div><div class="fila llegada"><span class="sr">Llegada: '+b+'</span>'+celdas(b, '')+'</div>';
-  $('escalera').innerHTML = html;
+  const el = $('escalera'); el.innerHTML = html;
+  // con muchas filas, casillas y huecos algo más pequeños (poco a poco, desde la sexta fila) para que quepa más escalera
+  const filas = esc.length + (fin ? 0 : 1) + (fin === 'llegado' ? 0 : 1), k = Math.max(0, filas - 5);
+  el.style.setProperty('--menos', Math.min(14, k*2.5)+'px'); el.style.setProperty('--hueco', Math.max(4, 8 - k)+'px');
 }
 function renderTeclado(){
   const p = ver(), fin = !!(p && p.fin);
@@ -325,9 +339,24 @@ function renderNav(){
   $('otrodia-txt').textContent = 'Nº '+S.dia+' · '+fechaLarga(S.dia);
 }
 function renderTodo(){ renderNav(); renderNiveles(); renderReto(); renderEscalera(); renderTeclado(); renderRacha(); }
-// tras subir un peldaño, que se vean el borrador y la llegada (el mando de abajo tapa parte de la pantalla)
-function verLlegada(){ const f = document.querySelector('.fila.llegada'); if(f) f.scrollIntoView({block:'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'}); }
-function medirMando(){ document.documentElement.style.setProperty('--mando', $('mando').offsetHeight+'px'); }
+// Tras subir, pedir pista, deshacer o cambiar de nivel, que el borrador y la llegada queden por encima del mando (que
+// tapa la parte de abajo de la pantalla); si no caben los dos, el borrador. Se mide y se desplaza solo lo que falta.
+// Mientras se escribe no se llama, para no mover la pantalla a quien ha subido a mirar la escalera.
+function verLlegada(suave = true){
+  const m = $('mando'), b = document.querySelector('.fila.borrador'), l = document.querySelector('.fila.llegada');
+  if(!m || !l) return;
+  const MARGEN = 12, tope = m.getBoundingClientRect().top - MARGEN;
+  let falta = l.getBoundingClientRect().bottom - tope;
+  if(b){ const rb = b.getBoundingClientRect();
+    if(rb.top - falta < MARGEN) falta = rb.bottom - tope;   // no caben los dos: basta con el borrador
+    if(rb.top - falta < MARGEN) falta = rb.top - MARGEN; }  // ni el borrador entero: que se vea su parte de arriba
+  vistaEn = performance.now();
+  if(Math.abs(falta) < 1) return;
+  window.scrollBy({top: falta, behavior: suave && !matchMedia('(prefers-reduced-motion: reduce)').matches ? 'smooth' : 'auto'});
+}
+// las casillas cambian de tamaño poco a poco: al acabar, se vuelve a medir (si acaba de desplazarse por una acción)
+let vistaEn = 0;
+const reajustar = e => { if(e.target === $('escalera') && performance.now() - vistaEn < 800) verLlegada(); };
 
 let tt;
 function toast(msg, kind, ms = 2400){
@@ -344,16 +373,19 @@ function abrirResultado(){
   const v = veredicto(p.res, r.par);
   $('res-titulo').textContent = 'Nº '+S.dia+' · '+NOMBRE[S.nivel]+' · '+r.t;
   $('res-veredicto').textContent = v.largo; $('res-veredicto').className = 'res-veredicto '+v.cls;
-  $('res-cifras').innerHTML = (p.res.r ? 'Tras '+cuenta(p.res) : cuenta(p.res)).replace(/(\d+)/g, '<b>$1</b>')+' · par '+r.par;
+  $('res-cifras').innerHTML = (p.res.r ? tras(p.res) : cuenta(p.res)).replace(/(\d+)/g, '<b>$1</b>')+' · par '+r.par;
   // al repetir, el resultado de esta vez (el que cuenta sigue siendo el primero)
   const repe = $('res-repe'), estaVez = p.rep && p.fin;
   repe.hidden = !estaVez;
   if(estaVez){ const rr = {n:peldanos(p), p:p.pistas, r:p.fin === 'rendido'};
-    repe.textContent = 'Esta vez: '+(rr.r ? 'te has rendido' : cuenta(rr)+' · '+veredicto(rr, r.par).corto.toLowerCase())+'. Cuenta tu primer resultado.'; }
+    repe.textContent = 'Esta vez: '+(rr.r ? 'te has rendido '+tras(rr).toLowerCase() : cuenta(rr)+' · '+veredicto(rr, r.par).corto.toLowerCase())+'. Cuenta tu primer resultado.'; }
   const tuya = p.res.e || [r.a];
   $('res-tuya').innerHTML = rutaHTML(tuya, r.b, tuya[tuya.length-1] !== r.b);
   $('res-par').innerHTML = rutaHTML(r.sol, r.b);
-  const min = $('res-min'); min.hidden = !(r.min < r.par);
+  // si tu escalera es la ruta del par, una sola fila (el aviso del mínimo se sigue viendo)
+  const igual = tuya.join() === r.sol.join(), min = $('res-min'); min.hidden = !(r.min < r.par);
+  $('res-tuya-etq').textContent = igual ? 'Tu escalera: ¡la ruta del par!' : 'Tu escalera';
+  $('res-par-etq').hidden = $('res-par').hidden = igual; $('res-par-bloque').hidden = igual && min.hidden;
   min.textContent = 'Con palabras menos corrientes se puede hacer en '+pl(r.min, 'peldaño', 'peldaños')+'.';
   $('res-nota').textContent = r.note;
   $('compartir-txt').textContent = textoCompartir();
@@ -478,7 +510,7 @@ function start(){
   const abierto = () => dialogos.some(d=>d.open);
   // un clic con el ratón o el dedo no deja el foco en el botón, para que Intro siga subiendo el peldaño
   const sinFoco = e => { if(e.detail > 0 && e.currentTarget.blur) e.currentTarget.blur(); };
-  $('niveles').onclick = e=>{ const b = e.target.closest('[data-nivel]'); if(b) irNivel(b.dataset.nivel); };
+  $('niveles').onclick = e=>{ const b = e.target.closest('[data-nivel]'); if(!b) return; sinFoco({detail:e.detail, currentTarget:b}); irNivel(b.dataset.nivel); };
   $('escalera').onclick = e=>{ const b = e.target.closest('.fila.borrador [data-i]'); if(b){ sinFoco({detail:e.detail, currentTarget:b}); elegir(+b.dataset.i); } };
   $('teclado').onclick = e=>{ const b = e.target.closest('[data-k]'); if(!b) return; sinFoco({detail:e.detail, currentTarget:b});
     const k = b.dataset.k; k === 'borrar' ? borrar() : k === 'subir' ? subir() : escribir(k); };
@@ -525,8 +557,8 @@ function start(){
   };
   document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState === 'visible') cambioDeDia(); });
   setInterval(cambioDeDia, 30000);
-  if(window.ResizeObserver) new ResizeObserver(medirMando).observe($('mando'));
-  renderTodo(); medirMando(); quizaInstalar();
+  $('escalera').addEventListener('transitionend', reajustar);
+  renderTodo(); verLlegada(false); quizaInstalar();
   $('instalar-cerrar').onclick = ()=>{ $('instalar').hidden = true; };
   $('instalar-boton').onclick = instalar;
 }

@@ -139,7 +139,7 @@
     <li>Las tildes no cuentan; la <b>ñ</b>, sí. Sin repetir palabras.</li>
     <li><b>Par</b>: el mínimo de palabras intermedias, usando palabras corrientes. <b>Pista</b> te escribe el siguiente peldaño y suma 1.</li>
     <li><b>Deshacer</b> no penaliza. <b>Rendirse</b> da la solución.</li>
-    <li>Tres escaleras al día. La llama cuenta los días seguidos en que acabas al menos una.</li>
+    <li>Tres escaleras al día. La llama cuenta los días seguidos en que llegas al final de al menos una escalera (rendirse no cuenta).</li>
   </ul>
   <label class="interruptor"><span>Modo noche</span><input type="checkbox" id="modo-noche" role="switch"><span class="pista-int" aria-hidden="true"></span></label>
   <button class="btn primary" id="reglas-cerrar" type="button">¡A jugar!</button>
@@ -152,10 +152,10 @@
   <p class="res-cifras" id="res-cifras"></p>
   <p class="res-repe" id="res-repe" hidden></p>
   <div class="res-bloque">
-    <p class="res-etiqueta">Tu escalera</p>
+    <p class="res-etiqueta" id="res-tuya-etq">Tu escalera</p>
     <div class="ruta" id="res-tuya"></div>
   </div>
-  <div class="res-bloque">
+  <div class="res-bloque" id="res-par-bloque">
     <p class="res-etiqueta" id="res-par-etq">La ruta del par</p>
     <div class="ruta" id="res-par"></div>
     <p class="res-min" id="res-min" hidden></p>
