@@ -151,12 +151,19 @@ function cerrarDia(){
 }
 
 // ---------- jugar ----------
+// si Pista o Rendirse esperaban «Confirmar», hacer otra cosa en la partida lo cancela (y borra su aviso)
+function cancelarConfirmar(){
+  if(!$('pista').classList.contains('aviso-negro') && !$('rendirse').classList.contains('aviso')) return;
+  restaurarPista(); restaurarRendirse(); toast('');
+}
 // se escribe en la casilla elegida del borrador y se pasa a la de su derecha; se elige otra tocándola o con las flechas
 function elegir(i){
+  cancelarConfirmar();
   const p = ver(); if(p && p.fin) return;
   pos = Math.max(0, Math.min(actual().length-1, i)); renderEscalera();
 }
 function escribir(c){
+  cancelarConfirmar();
   const p = ver(); if(p && p.fin) return;
   c = norm(c); if(c.length !== 1 || !LETRAS.includes(c)) return;
   escrito[pos] = c; pos = Math.min(actual().length-1, pos+1);
@@ -164,6 +171,7 @@ function escribir(c){
 }
 // Borrar vacía la casilla elegida; si ya estaba vacía, la de su izquierda (y se va a ella)
 function borrar(){
+  cancelarConfirmar();
   if(!escrito[pos] && pos > 0) pos--;
   if(!escrito[pos]) return renderEscalera();
   escrito[pos] = ''; renderEscalera(); renderTeclado();
@@ -173,6 +181,7 @@ function fallo(msg){
   const f = document.querySelector('.fila.borrador'); if(f){ f.classList.remove('mal'); void f.offsetWidth; f.classList.add('mal'); }
 }
 function subir(){
+  cancelarConfirmar();
   const p = partida(); if(p.fin) return;
   if(!lleno()) return toast(hayEscrito() ? 'Escribe la palabra entera' : 'Escribe la palabra nueva');
   const w = escrito.join(''), W = w.toUpperCase(), n = cambios(w, actual());
@@ -190,6 +199,7 @@ function subir(){
 // Deshacer: si hay algo escrito en el borrador, lo vacía; si no, quita el último peldaño
 const hayEscrito = () => escrito.some(c=>c);
 function deshacer(){
+  cancelarConfirmar();
   const p = ver(); if(p && p.fin) return;
   if(hayEscrito()){ vaciar(); toast(''); renderEscalera(); renderTeclado(); verLlegada(); return; }
   if(!p || !p.pasos.length) return;
@@ -197,7 +207,7 @@ function deshacer(){
 }
 // Pista: el siguiente peldaño del camino más corto hasta la llegada, por palabras corrientes (o, si no hay, por
 // cualquiera válida), sin repetir las de la escalera. Se deja como borrador y suma 1.
-// pide confirmación en el propio botón (5 segundos), como Rendirse
+// pide confirmación en el propio botón (5 segundos), como Rendirse; jugar mientras tanto la cancela
 let pistaPlazo;
 function restaurarPista(){ clearTimeout(pistaPlazo); const b = $('pista'); b.classList.remove('aviso-negro'); b.innerHTML = 'Pista <span class="coste">+1</span>'; }
 function pista(){
@@ -211,7 +221,7 @@ function pista(){
   if(!bp.classList.contains('aviso-negro')){
     restaurarRendirse();
     bp.classList.add('aviso-negro'); bp.textContent = 'Confirmar';
-    toast('La pista te costará un par, ¿seguro?', 'serio', 5000);
+    toast('La pista suma 1 a tu marcador. ¿La\u00a0quieres?', 'serio', 5000);
     clearTimeout(pistaPlazo); pistaPlazo = setTimeout(()=>{ restaurarPista(); toast(''); }, 5000);
     return;
   }
