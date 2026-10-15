@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Peldaño</title>
+<meta name="description" content="Una escalera que conecta dos palabras. Un juego de palabras diario en español.">
+<!-- Vista previa al compartir el enlace (WhatsApp, Telegram, redes): necesita direcciones completas.
+     La imagen se genera desde icons/og-fuente.html -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Peldaño">
+<meta property="og:locale" content="es_ES">
+<meta property="og:url" content="https://joseleking.github.io/Peldano/">
+<meta property="og:title" content="Peldaño · Una escalera que conecta dos palabras">
+<meta property="og:description" content="Un juego de palabras diario en español: baja de una palabra a otra cambiando una letra en cada peldaño.">
+<meta property="og:image" content="https://joseleking.github.io/Peldano/icons/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Logo de Peldaño, una escalera con una ñ en el peldaño central, con el lema «Una escalera que conecta dos palabras»">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" id="theme-color" content="#F6F1E7">
+<!-- Tema: claro por defecto; el modo noche se elige en la ventana «?» y se recuerda.
+     Se aplica aquí, antes de pintar la página, para que no haya un destello claro al abrir. -->
+<script>
+  (function(){ var oscuro = false; try{ oscuro = localStorage.getItem('peldano-tema') === 'oscuro'; }catch(e){}
+    document.documentElement.setAttribute('data-theme', oscuro ? 'dark' : 'light');
+    document.getElementById('theme-color').setAttribute('content', oscuro ? '#131B26' : '#F6F1E7'); })();
+</script>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Peldaño">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/favicon.ico" sizes="32x32">
+<link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preload" href="fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+<!-- Portada fugaz: la escalera del logo se monta peldaño a peldaño; se va sola o al tocarla -->
+<div class="portada" id="portada" aria-hidden="true">
+  <svg class="escalera-logo" viewBox="0 0 100 100">
+    <path class="larguero" d="M28 10V90"/><path class="larguero" d="M72 10V90"/>
+    <path class="travesano t1" d="M28 79H72"/>
+    <g class="destacado">
+      <rect x="17" y="33" width="66" height="34" rx="8"/>
+      <path d="M41 60V49.5M41 53C41 49 44.5 47.5 50 47.5S59 49 59 53V60"/>
+      <path d="M41.5 42.5C44 39.5 46.5 40 49.5 41.5S55.5 43.5 58.5 40.5"/>
+    </g>
+    <path class="travesano t3" d="M28 21H72"/>
+  </svg>
+  <p class="portada-nombre">Peldaño</p>
+  <p class="portada-lema">Una escalera que conecta dos palabras</p>
+</div>
+<div class="app">
+  <header>
+    <!-- el logo y el nombre recargan el juego (y llevan al día de hoy) -->
+    <a class="brand" href="./" title="Recargar Peldaño"><img src="icons/favicon.svg" alt="" width="36" height="36"><h1>Pelda<span class="met">ñ</span>o</h1></a>
+    <div class="barra">
+    <button class="redondo" id="pasados" type="button" aria-haspopup="dialog" aria-label="Días pasados y estadísticas" title="Días pasados y estadísticas"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></button>
+    <button class="racha" id="racha" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M13.6 2c.4 3-.9 4.8-2.3 6.4-.6-1.1-1.5-1.9-2.7-2.3.5 2-.4 3.5-1.5 5.1C6.1 12.6 5.3 14.1 5.3 16c0 3.6 3 6.2 6.7 6.2s6.7-2.6 6.7-6.2c0-2.7-1.3-4.8-2.5-6.8-1.2-1.9-2.3-3.9-2.6-7.2zM12 20.4c-1.7 0-3-1.2-3-2.8 0-1.4.9-2.4 1.8-3.5.3.8.8 1.3 1.5 1.6.1-1.2.5-2.3 1.1-3.3.9 1.4 1.6 2.9 1.6 4.6 0 2-1.3 3.4-3 3.4z"/></svg><span id="rachan">0</span></button>
+    <button class="redondo ayuda" id="ayuda" type="button" aria-haspopup="dialog" aria-label="Cómo se juega" title="Cómo se juega">?</button>
+    </div>
+  </header>
+
+  <!-- Solo cuando se juega un día pasado: qué día es y el atajo para volver al de hoy -->
+  <div class="otro-dia" id="otrodia" hidden>
+    <p class="otro-dia-txt" id="otrodia-txt"></p>
+    <button type="button" id="volver">Volver a hoy</button>
+  </div>
+
+  <!-- Selector de nivel: una escalera por nivel y día; debajo de cada nombre, su par o su resultado -->
+  <div class="niveles" id="niveles" role="tablist" aria-label="Nivel"></div>
+
+  <!-- Reto: número del día, título y marcador (par, peldaños y pistas) -->
+  <div class="reto">
+    <p class="reto-titulo" id="titulo"></p>
+    <p class="reto-nota" id="repeticion" hidden></p>
+    <div class="marcador" id="marcador">
+      <span class="cifra"><span>Par</span><b id="m-par">0</b></span>
+      <span class="cifra" id="c-pasos"><span>Peldaños</span><b id="m-pasos">0</b></span>
+      <span class="cifra" id="c-pistas"><span>Pistas</span><b id="m-pistas">0</b></span>
+    </div>
+  </div>
+
+  <!-- La escalera: salida arriba, peldaños, fila activa, borrador y llegada abajo -->
+  <div class="escalera" id="escalera"></div>
+
+  <!-- Invitación a instalar: una sola vez, tras el tercer día jugado, y nunca si ya está instalada -->
+  <div class="instalar" id="instalar" role="status" hidden>
+    <button type="button" class="instalar-cerrar" id="instalar-cerrar" aria-label="Cerrar">×</button>
+    <p class="instalar-titulo"><b>¿Juegas a diario?</b> Añade Peldaño a tu pantalla de inicio.</p>
+    <ol class="instalar-ios" id="instalar-ios" hidden>
+      <li>Toca el botón Compartir <svg viewBox="0 0 24 24" aria-label="(un cuadrado con una flecha hacia arriba)" role="img"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M7 11H5.5v9.5h13V11H17"/></svg> en la barra de Safari.</li>
+      <li>Elige <b>Añadir a pantalla de inicio</b>.</li>
+    </ol>
+    <button type="button" class="btn sec" id="instalar-boton" hidden>Instalar</button>
+  </div>
+
+  <!-- Abajo, siempre a mano: avisos, acciones y teclado; al terminar, el resultado -->
+  <div class="mando" id="mando">
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="jugar" id="jugar">
+      <div class="acciones">
+        <button class="btn sec" id="deshacer" type="button">Deshacer</button>
+        <button class="btn sec" id="pista" type="button">Pista <span class="coste">+1</span></button>
+        <button class="btn sec" id="rendirse" type="button">Rendirse</button>
+      </div>
+      <div class="teclado" id="teclado" aria-label="Teclado"></div>
+    </div>
+    <div class="terminado" id="terminado" hidden>
+      <p class="veredicto" id="veredicto"></p>
+      <p class="dia-hecho" id="dia-hecho" hidden>¡Día completado! Vuelve mañana a por tres escaleras nuevas.</p>
+      <div class="terminado-acciones">
+        <button class="btn" id="ver-resultado" type="button" aria-haspopup="dialog">Ver resultado</button>
+        <button class="btn primary" id="siguiente-b" type="button">Siguiente nivel</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Reglas: se abren solas la primera vez y luego con el botón «?» -->
+<dialog class="ventana reglas" id="reglas" aria-labelledby="reglas-titulo">
+  <h2 id="reglas-titulo">Cómo se juega</h2>
+  <ul>
+    <li>Baja de la palabra de arriba a la de abajo cambiando <b>una sola letra en cada peldaño</b>, sin moverla de sitio. Cada peldaño tiene que ser una palabra válida.</li>
+    <li>
+      <div class="ejemplo" aria-label="Ejemplo: de risa a pena por pisa y pesa">
+        <span class="mini"><i>r</i><i>i</i><i>s</i><i class="ok">a</i></span>
+        <span class="mini"><i class="cambio">p</i><i>i</i><i>s</i><i class="ok">a</i></span>
+        <span class="mini"><i class="ok">p</i><i class="cambio ok">e</i><i>s</i><i class="ok">a</i></span>
+        <span class="mini"><i class="ok">p</i><i class="ok">e</i><i class="cambio ok">n</i><i class="ok">a</i></span>
+      </div>
+    </li>
+    <li>Toca la letra que quieres cambiar, escribe la nueva y pulsa <b>Subir</b>. Las letras en verde ya están en su sitio.</li>
+    <li>Las tildes no cuentan, pero la <b>ñ</b> es una letra más. No puedes repetir palabras en la misma escalera.</li>
+    <li>El <b>par</b> es el número mínimo de peldaños con palabras corrientes. Cada <b>pista</b> suma 1. Con alguna palabra rara puedes quedar <b>bajo par</b>.</li>
+    <li><b>Deshacer</b> quita el último peldaño sin penalizar. <b>Rendirse</b> te enseña la solución.</li>
+    <li>Cada día hay tres escaleras: Principiante, Intermedio y Experto. La llama cuenta los días seguidos en que completas las tres. En el calendario tienes los días anteriores.</li>
+  </ul>
+  <label class="interruptor"><span>Modo noche</span><input type="checkbox" id="modo-noche" role="switch"><span class="pista-int" aria-hidden="true"></span></label>
+  <button class="btn primary" id="reglas-cerrar" type="button">¡A jugar!</button>
+</dialog>
+
+<!-- Resultado de una escalera terminada: veredicto, ruta del par, nota curiosa y texto para compartir -->
+<dialog class="ventana resultado" id="resultado" aria-labelledby="res-titulo">
+  <h2 id="res-titulo" class="res-titulo"></h2>
+  <p class="res-veredicto" id="res-veredicto"></p>
+  <p class="res-cifras" id="res-cifras"></p>
+  <p class="res-repe" id="res-repe" hidden></p>
+  <div class="res-bloque">
+    <p class="res-etiqueta">Tu escalera</p>
+    <div class="ruta" id="res-tuya"></div>
+  </div>
+  <div class="res-bloque">
+    <p class="res-etiqueta" id="res-par-etq">La ruta del par</p>
+    <div class="ruta" id="res-par"></div>
+    <p class="res-min" id="res-min" hidden></p>
+  </div>
+  <div class="res-bloque nota">
+    <p class="res-etiqueta">Nota curiosa</p>
+    <p id="res-nota"></p>
+  </div>
+  <pre class="compartir-txt" id="compartir-txt"></pre>
+  <button class="btn sec" id="copiar" type="button">Copiar resultado</button>
+  <div class="res-acciones">
+    <button class="btn" id="otra-vez" type="button">Volver a jugar</button>
+    <button class="btn primary" id="siguiente" type="button">Siguiente nivel</button>
+  </div>
+  <button class="btn" id="res-cerrar" type="button">Cerrar</button>
+</dialog>
+
+<!-- Días pasados (calendario) y estadísticas -->
+<dialog class="ventana calendario" id="calendario" aria-labelledby="cal-titulo">
+  <div class="pestanas" role="tablist">
+    <button type="button" role="tab" id="tab-cal" aria-controls="panel-cal" aria-selected="true">Calendario</button>
+    <button type="button" role="tab" id="tab-est" aria-controls="panel-est" aria-selected="false">Estadísticas</button>
+  </div>
+  <div class="panel" id="panel-cal" role="tabpanel" aria-labelledby="tab-cal">
+    <div class="cal-head">
+      <button class="cal-mes" id="cal-prev" type="button" aria-label="Mes anterior">‹</button>
+      <h2 id="cal-titulo"></h2>
+      <button class="cal-mes" id="cal-next" type="button" aria-label="Mes siguiente">›</button>
+    </div>
+    <div class="cal-dias" aria-hidden="true"><span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+    <div class="cal-grid" id="cal-grid"></div>
+    <div class="cal-leyenda"><span><i class="l-jugado"></i>Empezado</span><span><i class="l-completo"></i>Los tres niveles</span></div>
+    <p class="cal-nota">Jugar días pasados no cuenta para la racha.</p>
+  </div>
+  <div class="panel" id="panel-est" role="tabpanel" aria-labelledby="tab-est" hidden>
+    <div class="est-cifras" id="est-cifras"></div>
+    <h3 class="est-titulo">Por nivel</h3>
+    <div class="est-niveles" id="est-niveles"></div>
+    <div class="est-leyenda"><span><i class="s-bajo"></i>Bajo par</span><span><i class="s-par"></i>En par</span><span><i class="s-sobre"></i>Sobre el par</span><span><i class="s-rend"></i>Rendido</span></div>
+  </div>
+  <button class="btn" id="cal-cerrar" type="button">Cerrar</button>
+</dialog>
+<noscript><p class="cargando" style="text-align:center">Peldaño necesita JavaScript.</p></noscript>
+<script src="js/juego.js"></script>
+</body>
+</html>

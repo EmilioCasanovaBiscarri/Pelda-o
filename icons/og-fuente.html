@@ -1,0 +1,40 @@
+<!doctype html>
+<!-- Fuente de icons/og.png, la imagen de vista previa (Open Graph) de 1200×630.
+     Para regenerarla: abrir con Chrome sin ventana a 1200×630 y hacer captura, p. ej.
+     chrome --headless=new --window-size=1200,630 --hide-scrollbars --screenshot=icons/og.png icons/og-fuente.html -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face{font-family:"Bricolage Grotesque";font-weight:200 800;src:url(../fonts/bricolage.woff2) format("woff2")}
+  @font-face{font-family:"Atkinson Hyperlegible";font-weight:700;src:url(../fonts/atkinson-700.woff2) format("woff2")}
+  html,body{margin:0;width:1200px;height:630px;overflow:hidden}
+  body{background:#7DB48C;color:#1E2A3A;font-family:"Atkinson Hyperlegible",sans-serif;display:flex;align-items:center;gap:60px;padding:0 90px;box-sizing:border-box}
+  .logo{width:330px;height:330px;flex:none}
+  .texto{display:flex;flex-direction:column;gap:18px}
+  h1{margin:0;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:140px;letter-spacing:-.03em;line-height:.95}
+  h1 .met{color:#F6F1E7}
+  .lema{margin:0;font-size:40px;font-weight:700;line-height:1.15}
+  .fila{display:flex;align-items:center;gap:10px;margin-top:14px}
+  .fila span{width:64px;height:64px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    background:#F6F1E7;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:32px}
+  .fila span.ok{background:#1E2A3A;color:#7DB48C}
+  .fila i{font-style:normal;font-size:34px;font-weight:700;padding:0 8px}
+</style>
+</head>
+<body>
+  <svg class="logo" viewBox="0 0 100 100" aria-hidden="true">
+    <g fill="none" stroke="#1E2A3A" stroke-width="6" stroke-linecap="round"><path d="M28 10V90M72 10V90M28 21H72M28 79H72"/></g>
+    <rect x="17" y="33" width="66" height="34" rx="8" fill="#F6F1E7" stroke="#1E2A3A" stroke-width="5"/>
+    <g fill="none" stroke="#1E2A3A" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M41 60V49.5M41 53C41 49 44.5 47.5 50 47.5S59 49 59 53V60"/>
+      <path d="M41.5 42.5C44 39.5 46.5 40 49.5 41.5S55.5 43.5 58.5 40.5"/>
+    </g>
+  </svg>
+  <div class="texto">
+    <h1>Pelda<span class="met">ñ</span>o</h1>
+    <p class="lema">Una escalera que conecta<br>dos palabras</p>
+    <div class="fila" aria-hidden="true"><span>R</span><span>I</span><span>S</span><span class="ok">A</span><i>→</i><span class="ok">P</span><span class="ok">E</span><span class="ok">N</span><span class="ok">A</span></div>
+  </div>
+</body>
+</html>
