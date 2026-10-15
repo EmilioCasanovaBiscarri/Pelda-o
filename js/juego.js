@@ -218,7 +218,7 @@ function rendirse(){
   if(!b.classList.contains('aviso')){
     restaurarPista();
     b.classList.add('aviso'); b.textContent = 'Confirmar';
-    toast('¿Seguro? Toca «Confirmar» para ver la solución', 'bad', 5000);
+    toast('Toca «Confirmar» para ver la solución', 'bad', 5000);
     clearTimeout(rendirPlazo); rendirPlazo = setTimeout(()=>{ restaurarRendirse(); toast(''); }, 5000);
     return;
   }
