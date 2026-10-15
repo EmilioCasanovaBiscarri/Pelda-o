@@ -31,7 +31,7 @@ Una escalera que conecta dos palabras. Juego de palabras diario en español: se 
   Peldaño #3 · Intermedio
   De la reja al muro
   🪜 6 peldaños (par 5) · +1
-  joseleking.github.io/Peldano
+  emiliocasanovabiscarri.github.io/Peldano
   ```
 
   Con pistas, «🪜 5 peldaños + 1 pista (par 5) · +1»; al rendirse, «🏳️ Me he rendido (par 5)».
@@ -81,11 +81,11 @@ Para empezar de cero, abre <http://localhost:8000/reiniciar> y confirma con «S�
 
 ## Publicación en GitHub Pages
 
-El juego es estático y usa rutas relativas, así que funciona tal cual en `https://joseleking.github.io/Peldano/`:
+El juego es estático y usa rutas relativas, así que funciona tal cual en `https://emiliocasanovabiscarri.github.io/Peldano/`:
 
 1. En GitHub: *Settings → Pages → Build and deployment → Source: Deploy from a branch*.
 2. Rama `main`, carpeta `/ (root)`, *Save*.
-3. A los pocos minutos estará en <https://joseleking.github.io/Peldano/>.
+3. A los pocos minutos estará en <https://emiliocasanovabiscarri.github.io/Peldano/>.
 
 Para instalarlo en el móvil: abrir la dirección y, en Android (Chrome), *Instalar aplicación*; en iPhone (Safari), *Compartir → Añadir a pantalla de inicio*. La instalación y el modo sin conexión necesitan HTTPS, que GitHub Pages ya da.
 
