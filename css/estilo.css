@@ -255,12 +255,10 @@ button.cal-dia.completo{background:var(--accent);color:var(--accent-ink)}
   background:#7DB48C;color:#1E2A3A;cursor:pointer;transition:opacity .45s ease,visibility .45s;padding:16px;text-align:center}
 .portada.fuera{opacity:0;visibility:hidden;pointer-events:none}
 .escalera-logo{width:min(46vw,200px);height:auto;overflow:visible}
-.escalera-logo path{fill:none;stroke:#1E2A3A;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
-.escalera-logo .destacado rect{fill:#F6F1E7;stroke:#1E2A3A;stroke-width:5}
-.escalera-logo .destacado path{stroke-width:5.5}
-.escalera-logo .larguero{stroke-dasharray:80;animation:traza .6s ease-out both}
+.escalera-logo path{fill:none;stroke:#1E2A3A;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+.escalera-logo .larguero{stroke-width:10;stroke-dasharray:80;animation:traza .6s ease-out both}
 .escalera-logo .t1{animation:peldano .35s .55s ease-out both}
-.escalera-logo .destacado{transform-origin:50px 50px;animation:destaca .5s .85s cubic-bezier(.3,1.5,.6,1) both}
+.escalera-logo .destacado{stroke:#F6F1E7;stroke-width:10;transform-origin:50px 50px;animation:destaca .5s .85s cubic-bezier(.3,1.5,.6,1) both}
 .escalera-logo .t3{animation:peldano .35s 1.25s ease-out both}
 @keyframes traza{from{stroke-dashoffset:80}to{stroke-dashoffset:0}}
 @keyframes peldano{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}

@@ -17,7 +17,7 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Logo de Peldaño, una escalera con una ñ en el peldaño central, con el lema «Una escalera que conecta dos palabras»">
+<meta property="og:image:alt" content="Logo de Peldaño, una escalera de mano con el peldaño central destacado, con el lema «Una escalera que conecta dos palabras»">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" id="theme-color" content="#F6F1E7">
 <!-- Tema: claro por defecto; el modo noche se elige en la ventana «?» y se recuerda.
@@ -42,14 +42,12 @@
 <!-- Portada fugaz: la escalera del logo se monta peldaño a peldaño; se va sola o al tocarla -->
 <div class="portada" id="portada" aria-hidden="true">
   <svg class="escalera-logo" viewBox="0 0 100 100">
-    <path class="larguero" d="M28 10V90"/><path class="larguero" d="M72 10V90"/>
-    <path class="travesano t1" d="M28 79H72"/>
-    <g class="destacado">
-      <rect x="17" y="33" width="66" height="34" rx="8"/>
-      <path d="M41 60V49.5M41 53C41 49 44.5 47.5 50 47.5S59 49 59 53V60"/>
-      <path d="M41.5 42.5C44 39.5 46.5 40 49.5 41.5S55.5 43.5 58.5 40.5"/>
+    <g transform="rotate(20 50 50)">
+      <path class="larguero" d="M34 12V88"/><path class="larguero" d="M66 12V88"/>
+      <path class="travesano t1" d="M34 71H66"/>
+      <path class="destacado" d="M34 50H66"/>
+      <path class="travesano t3" d="M34 29H66"/>
     </g>
-    <path class="travesano t3" d="M28 21H72"/>
   </svg>
   <p class="portada-nombre">Peldaño</p>
   <p class="portada-lema">Una escalera que conecta dos palabras</p>

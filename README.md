@@ -62,7 +62,7 @@ data/retos.json         retos por nivel: a, b, t (título), par, sol (ruta del p
 data/diccionario.json   palabras (todas las válidas) y corrientes (las del par y las pistas)
 manifest.webmanifest    datos de la app instalable
 sw.js                   service worker (funcionamiento sin conexión)
-icons/                  logo e iconos de la app (favicon.svg es el original); og.png es la vista previa al compartir el enlace, generada desde og-fuente.html
+icons/                  logo (escalera de mano inclinada con el peldaño central en crema) e iconos de la app (favicon.svg es el original); og.png es la vista previa al compartir el enlace, generada desde og-fuente.html
 fonts/                  Bricolage Grotesque y Atkinson Hyperlegible, alojadas aquí para ir sin conexión
 ```
 
