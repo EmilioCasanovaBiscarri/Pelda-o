@@ -104,8 +104,8 @@ function camino(desde, hasta, vale){
   return null;
 }
 
-// ---------- racha: días seguidos completando los tres niveles en su fecha ----------
-// Sigue viva si hoy aún no has completado el día pero sí ayer; se rompe al saltarte un día entero.
+// ---------- racha: días seguidos terminando al menos un nivel en su fecha ----------
+// Sigue viva si hoy aún no has terminado ninguno pero ayer sí; se rompe al saltarte un día entero.
 function rachaHasta(d){ let n = 0; while(d >= 1 && S.racha[d]){ n++; d--; } return n; }
 function rachaActual(){ const t = today(); return rachaHasta(S.racha[t] ? t : t-1); }
 function rachaMejor(){ let mejor = 0, n = 0; const t = today(); for(let d = 1; d <= t; d++){ n = S.racha[d] ? n+1 : 0; mejor = Math.max(mejor, n); } return mejor; }
@@ -113,19 +113,18 @@ function renderRacha(){
   const r = rachaActual(), hoy = !!S.racha[today()], el = $('racha');
   $('rachan').textContent = r;
   el.className = 'racha' + (hoy ? ' hoy' : r ? ' pendiente' : '');
-  el.setAttribute('aria-label', 'Racha: '+pl(r, 'día seguido', 'días seguidos')+(hoy || !r ? '' : '. Completa hoy los tres niveles para mantenerla'));
+  el.setAttribute('aria-label', 'Racha: '+pl(r, 'día seguido', 'días seguidos')+(hoy || !r ? '' : '. Termina hoy un nivel para mantenerla'));
 }
 function toastRacha(){
   const r = rachaActual(), m = rachaMejor(), hoy = !!S.racha[today()];
-  toast(r ? 'Racha: '+pl(r, 'día', 'días')+' · Mejor: '+m+(hoy ? '' : ' · ¡Completa hoy los tres niveles!')
+  toast(r ? 'Racha: '+pl(r, 'día', 'días')+' · Mejor: '+m+(hoy ? '' : ' · ¡Termina hoy un nivel!')
           : m ? 'Sin racha ahora · Mejor: '+pl(m, 'día', 'días')
-              : 'Completa los tres niveles de hoy para empezar una racha', r ? 'good' : '', 3500);
+              : 'Termina un nivel de hoy para empezar una racha', r ? 'good' : '', 3500);
 }
-// al terminar un nivel: si con él quedan los tres, el día está completo (y, si es hoy, cuenta para la racha)
+// al terminar un nivel: si es hoy, el día cuenta para la racha; devuelve si con él quedan los tres (día completo)
 function cerrarDia(){
-  if(!diaCompleto(S.dia)) return false;
   if(S.dia === today()) S.racha[S.dia] = 1;
-  return true;
+  return diaCompleto(S.dia);
 }
 
 // ---------- jugar ----------
@@ -159,7 +158,10 @@ function subir(){
   if(!esValida(w)) return fallo('«'+W+'» no está en el diccionario');
   if(escalera().includes(w)) return fallo('«'+W+'» ya está en tu escalera');
   p.pasos.push(w); tocar(p); vaciar();
-  if(w === reto().b) return llegar();
+  const b = reto().b;
+  if(w === b) return llegar();
+  // a una letra de la llegada, el último peldaño es evidente: se pone solo (y cuenta como peldaño)
+  if(cambios(w, b) === 1){ p.pasos.push(b); return llegar(); }
   save(); toast(''); renderTodo(); verLlegada();
 }
 // Deshacer: si hay algo escrito en el borrador, lo vacía; si no, quita el último peldaño
