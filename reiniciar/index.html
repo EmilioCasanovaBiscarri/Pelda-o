@@ -38,7 +38,8 @@ document.getElementById('borrar').onclick = async () => {
   try { Object.keys(localStorage).filter(k => k.startsWith('peldano')).forEach(k => localStorage.removeItem(k)); } catch (e) {}
   try { sessionStorage.clear(); } catch (e) {}
   try { if (window.caches) for (const k of await caches.keys()) if (k.startsWith('peldano')) await caches.delete(k); } catch (e) {}
-  try { if (navigator.serviceWorker) for (const r of await navigator.serviceWorker.getRegistrations()) await r.unregister(); } catch (e) {}
+  // solo el service worker de Peldaño: los demás juegos del mismo sitio tienen el suyo
+  try { if (navigator.serviceWorker) { const r = await navigator.serviceWorker.getRegistration('../'); if (r && r.scope === new URL('../', location).href) await r.unregister(); } } catch (e) {}
   document.getElementById('msg').innerHTML = '<b>Listo: Peldaño está como nuevo.</b>';
   document.getElementById('sub').textContent = 'Volviendo al juego…';
   setTimeout(() => location.replace('../'), 900);
