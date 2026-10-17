@@ -94,6 +94,8 @@ El juego es estático y usa rutas relativas, así que funciona tal cual en `http
 
 Para instalarlo en el móvil: abrir la dirección y, en Android (Chrome), *Instalar aplicación*; en iPhone (Safari), *Compartir → Añadir a pantalla de inicio*. La instalación y el modo sin conexión necesitan HTTPS, que GitHub Pages ya da.
 
+**El `id` de `manifest.webmanifest` es `"/Peldano/"` y no se debe cambiar nunca.** Chrome identifica la app instalada por él: si cambia, los móviles la toman por otra app. Además, el `id` no se resuelve respecto a la carpeta del juego, sino respecto al origen de `start_url` (`https://emiliocasanovabiscarri.github.io`). Por eso no vale `"./"` ni `"/"`: los dos dan la raíz del sitio, la misma que Almanaque, y Chrome confundiría las dos apps («ya está instalado», «No se puede abrir la app»). `"/Peldano/"` es además el `id` que Chrome calculaba cuando el manifiesto no lo traía, así que las instalaciones antiguas siguen siendo la misma app.
+
 Si cambia la dirección, actualiza `URL_JUEGO` en `js/juego.js` (de ella sale el enlace del texto de compartir, sin `https://`) y las etiquetas `og:` de `index.html`.
 
 ## Derechos de autor
