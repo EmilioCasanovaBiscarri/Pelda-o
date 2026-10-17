@@ -14,6 +14,8 @@ Una escalera que conecta dos palabras. Juego de palabras diario en español: se 
 - Puntuación tipo golf: peldaños + pistas, frente al par. Menos: «¡Bajo par!» (posible con atajos de palabras raras); igual: «En par»; más: «+1», «+2»…
 - **Tres escaleras al día**, una por nivel: Principiante (par 2–3), Intermedio (par 4) y Experto (par 5 o más). Se elige con el selector de arriba; al terminar una, se ofrece la siguiente. El día está **completado** cuando se terminan las tres (llegando o rindiéndose).
 - El **nº 1 es el 15 de octubre de 2026** (constante `LANZAMIENTO` en `js/juego.js`). El reto *n* de cada nivel es el del día *n*; si hay menos retos que días, se vuelve a empezar por el primero.
+- Hay **retos hasta el 31 de diciembre de 2026** (día nº 78). Si no se añaden más, el 1 de enero de 2027 se volvería a empezar por el nº 1.
+- Algunos días de diciembre tienen retos con tema: Lotería (22 dic, «Del gordo al pobre» y «Del bombo al Gordo»), Nochebuena (24 dic, «De la cena a la misa»), Navidad (25 dic, «Del pino al reno» y «Del belén a los magos»), Reyes (27 dic, «De la carta a los magos»; 30 dic, «De los magos a los pajes») y Nochevieja (31 dic, «Del vino al cava» y «De la nueva a la vieja»).
 
 ## Cómo se juega en pantalla
 
